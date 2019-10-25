@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div th:fragment="menu">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">SISGAT</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+       <li class="nav-item active">
+        <a class="nav-link" href="listaBancas">BANCAS AVALIADORAS</a>
+      </li>
+       <li class="nav-item active">
+        <a class="nav-link" href="listaTrabalhos">TRABALHOS</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="listaPessoas">ORIENTADORES</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="listaAlunos">ALUNOS</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="listaCursos">CURSOS</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          MENU
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="testeValidacao">validacao do cpf</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      
+    </ul>
+    
+      <li ><a href="#"><span class="glyphicon glyphicon-user"></span> Cadastre-se</a></li>
+      <li ><a href="/"><span class="glyphicon glyphicon-log-in"></span>Entrar</a></li>
+    
+  </div>
+</nav>
+</div>

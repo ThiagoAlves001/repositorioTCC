@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Trabalhos</title>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        
+        <style>
+         .card-deck {
+             justify-content: center;
+             align-items: center
+         }
+     </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div th:insert="~{nav :: menu}"></div>
+                    <div class="form-row" style="margin-top: 2%">
+                        <div class="card-deck">
+                            <div th:each="trabalho: ${trabalhos}">                            
+                                <div class="card" style="width: 18rem; margin-top: 4%">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><span th:text="${trabalho.tema}"></span></h5>
+                                        <h6 class="card-subtitle mb-2 text-muted"><span th:text="${trabalho.aluno.nome}"></span></h6>
+                                      <p class="card-text"><span th:text="${trabalho.breve_resumo}"></span></p>
+                                      <a href="#" class="card-link">Link do card</a>
+                                      <a href="#" class="card-link">Outro link</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:insert="~{footer :: rodape}"></div>
+        </div>
+    </body>
+</html>

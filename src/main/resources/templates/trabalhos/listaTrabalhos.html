@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Alunos</title>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        
+        <link href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+        <script src="bootstrap/js/bootstrap-table-pt-BR.js"></script>
+        
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+      
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        
+        <script src="datepicker/js/bootstrap-datepicker.js"></script>
+        <link rel="stylesheet" href="datepicker/css/datepicker.css">
+        <script src="bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.pt-BR.js"></script>
+        <script>
+            $(document).ready(function () {
+              $('.datepicker').datepicker({
+                    language: 'pt-BR',
+                    autoclose: 1
+              });
+            });		
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div th:insert="~{nav :: menu}"></div>
+                    
+                    <div class="accordion" id="accordionExample" style="margin-top: 2%">
+			<div class="card">
+			    <div class="card-header" id="headingOne">
+			      <h5 class="mb-0">
+			        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Inserir Novo Trabalho</button>
+			      </h5>
+			    </div>
+			
+			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+			      <div class="card-body">
+			      	<form action="salvarTrabalho" method="post">
+                                    <div class="form-row">
+                                        
+                                        <div class="form-group col-md-8">
+                                            <label for="area_da_pesquisa">Área de Pesquisa</label> 
+                                            <input required type="text" class="form-control" id="area_da_pesquisa" name="area_da_pesquisa" placeholder="Informe a area da pesquisa " />
+                                        </div>
+                                       
+                                        
+                                        
+                                        <div class="form-group col-md-4">
+                                            <label for="status_de_conclusao">Status de Conclusão</label> 
+                                            <select required  name="status_de_conclusao" class="form-control ">
+                                                <option  value="Em Desenvolvimento"  >Em Desenvolvimento</option>
+                                                <option  value="Concluido"  >Concluido</option>
+                                             </select>
+                                           
+                                        </div>
+                                        
+                                        <div class="form-group col-md-8">
+                                            <label for="pdf_tcc">PDF TCC</label> 
+                                            <input required type="text" class="form-control" id="pdf_tcc" name="pdf_tcc" placeholder="Informe o tcc" />
+                                        </div>
+                                        
+                                        <div class="form-group col-md-4">
+                                            <label for="nota_da_apresentacao">Nota da Apresentacao</label> 
+                                            <input required type="number" class="form-control" id="nota_da_apresentacao" name="nota_da_apresentacao" placeholder="Informe a noa da apresentação" />
+                                        </div>
+                                       
+                                        
+                                                                                
+                                        <div class="form-group col-md-8">
+                                           <label for="orientador">Orientador</label> 
+                                        <select required data-size="2" class="form-control" name="orientadorID">
+                                            <option th:each="orientador : ${orientadores}" th:value="${orientador.id}" th:text="${orientador.nome}"></option>
+                                        </select>
+                                        </div>
+                                        
+                                        <div class="form-group col-md-4">
+                                            <label for="data_para_apresentacao">Data para Apresentação</label> 
+                                            <input required class="datepicker form-control" autocomplete="off" name="data_para_apresentacao" data-date-format="dd/mm/yyyy"  />
+                                        </div>
+                                        
+                                        
+                                        <div class="form-group col-md-8">
+                                           <label for="curso">Curso</label> 
+                                        <select required class="form-control" name="cursoID" >
+                                            <option  th:each="cur : ${listaDeCursos}" th:value="${cur.id}" th:text="${cur.nome}" ></option>
+                                        </select>
+                                        </div>
+                                        
+                                        
+                                        <div class="form-group col-md-4">
+                                            <label for="tema">Tema do Trabalho</label> 
+                                            <input required type="text" class="form-control" id="tema" name="tema" placeholder="Informe o tema" />
+                                        </div>
+                                        
+                                                                               
+                                        <div class="form-group col-md-8">
+                                        <label for="aluno">Aluno</label>
+                                        <select required class="form-control" th:field="*{aluno.id}">
+                                            <option th:each="al : ${listaDeAlunos}" th:value="${al.id}" th:text="${al.nome}"></option>
+                                        </select>
+                                        </div>
+                                        
+                                        <div class="form-group col-md-8">
+                                            <label for="co_orientador">Co-orientador</label> 
+                                            <input required type="text" class="form-control" id="co_orientador" name="co_orientador" placeholder="Informe o co-orientador" />
+                                        </div>
+                                        
+                                                                                                                       
+                                        <div class="form-group col-md-8">
+                                            <p>Breve Resumo</p>
+                                             <textarea  required type="text" id="breve_resumo" name="breve_resumo" rows="5" cols="33" class="form-control" placeholder="Informe um breve resumo">
+                                            </textarea>
+                                             
+                                        </div>
+                                        
+                                                                               
+                                    </div>
+                                    <div class="form-row">
+                                        <button type="submit" class="btn btn-success">Salvar</button>
+                                    </div>
+                                </form>
+			      </div>
+			    </div>
+			</div>
+                    </div>
+                    
+                    <hr/>
+                    <div class="col-md-12"  style="margin-top: 2%">
+                       <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false">
+                        <thead>
+                          <tr>
+                            <th>Area da Pesquisa</th>
+                            <th>Status de Conclusão</th>
+                            <th>Pdf do TCC</th>
+                            <th>Orientador</th>
+                            <th>Aluno</th>
+                            <th>Curso</th>
+                            <th>Co-orientador</th>
+                            <th>Breve Resumo</th>
+                            <th>Tema</th>
+                            <th>Data para Apresentação</th>
+                            <th>Nota da Apresentação</th>
+                            <th>Ações</th>
+                          </tr>
+                        </thead>
+                        <tr th:each="trabalho: ${trabalhos}">
+                            <td><span  th:text="${trabalho.area_da_pesquisa}"></span></td>
+                            <td><span  th:text="${trabalho.status_de_conclusao}"></span></td>
+                            <td><span  th:text="${trabalho.pdf_tcc}"></span></td>
+                            <td><span  th:text="${trabalho.orientador.nome}"></span></td>
+                            <td><span  th:text="${trabalho.aluno.nome}"></span></td>
+                            <td><span  th:text="${trabalho.curso.nome}"></span></td>
+                            <td><span  th:text="${trabalho.co_orientador}"></span></td>
+                            <td><span  th:text="${trabalho.breve_resumo}"></span></td>
+                            <td><span  th:text="${trabalho.tema}"></span></td>
+                            <td><span  th:text="${#dates.format(trabalho.data_para_apresentacao, 'dd/mm/yyyy')}"></span></td>
+                            <td><span  th:text="${trabalho.nota_da_apresentacao}"></span></td>
+                               
+                            <td>
+                                <form action="deletarTrabalho" method="post">
+                                    <input type="hidden" name="id" th:value="${trabalho.id}" />
+                                    <button type="submit" onclick="return confirm('Deseja realmente excluir o registro?')" class="btn btn-danger">Remover</button>
+                                </form>
+                            </td> 
+                        </tr>
+                      </table>                        
+                </div>
+            </div>
+            <div th:insert="~{footer :: rodape}"></div>
+        </div>
+    </body>
+</html>
