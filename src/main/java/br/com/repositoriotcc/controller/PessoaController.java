@@ -82,4 +82,13 @@ public class PessoaController {
         return "pessoas/testeValidacao";
         
     }
+    
+    @RequestMapping("pesquisaOrientador")
+    public String oesquisaOrientador(Model model) {
+         
+         Iterable<PessoaModel> testeValidacao = service.obterTodos();
+         model.addAttribute("pessoas", testeValidacao);
+
+        return "pessoas/pesquisaPessoas";
+    }    
 }
