@@ -32,7 +32,7 @@ function validarFormulario() {
     if (muitoCurto(cad.txtnome, 'Nome', 2)) return;
     if (muitoCurto(cad.txtsobrenome, 'Sobrenome', 2)) return;
     if (tamanhoErrado(cad.txtCPF, 'CPF', 11)) return;
-    if (tamanhoErrado(cad.txtDDD, 'DDD', 2)) return;
+    if (tamanhoErrado(cad.txtDDD, 'DDD', 2)) return;terc
     if (muitoCurto(cad.txtContato, 'Nº do telefone', 8)) return;
     if (muitoCurto(cad.txtEmail1, 'E-mail', 10)) return;
     if (muitoCurto(cad.txtRua, 'Logradouro', 3)) return;
