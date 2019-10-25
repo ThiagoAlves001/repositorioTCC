@@ -29,25 +29,16 @@ function diferentes(campo1, nome1, campo2, nome2) {
 function validarFormulario() {
     var cad = document.getElementById('cad');
 
-    if (muitoCurto(cad.txtnome, 'Nome', 2)) return;
-    if (muitoCurto(cad.txtsobrenome, 'Sobrenome', 2)) return;
+
+
+
+
+
+    
     if (tamanhoErrado(cad.txtCPF, 'CPF', 11)) return;
-    if (tamanhoErrado(cad.txtDDD, 'DDD', 2)) return;terc
-    if (muitoCurto(cad.txtContato, 'Nº do telefone', 8)) return;
-    if (muitoCurto(cad.txtEmail1, 'E-mail', 10)) return;
-    if (muitoCurto(cad.txtRua, 'Logradouro', 3)) return;
-    if (muitoCurto(cad.txtBairro, 'Bairro', 3)) return;
-    if (muitoCurto(cad.txtCidade, 'Cidade', 3)) return;
-    if (muitoCurto(cad.txtNumero, 'Número do endereço', 1)) return;
-    if (tamanhoErrado(cad.txtCep, 'CEP', 8)) return;
-    if (muitoCurto(cad.txtLogin, 'Nome de usuário', 7)) return;
-    if (muitoCurto(cad.txtsenha, 'Senha', 6)) return;
-    if (muitoCurto(cad.txtCsenha, 'Confirmação da senha', 6)) return;
+    
     if (naoNumerico(cad.txtCPF, 'CPF')) return;
-    if (naoNumerico(cad.txtDDD, 'DDD')) return;
-    if (naoNumerico(cad.txtContato, 'Nº do telefone')) return;
-    //if (naoNumerico(cad.txtNumero, 'Número')) return;
-    if (naoNumerico(cad.txtCep, 'CEP')) return;
+    
 
     if (diferentes(cad.txtsenha, 'Senha', cad.txtCsenha, 'Confirmação da Senha')) return;
     if (diferentes(cad.txtEmail1, 'E-mail', cad.txtEmail2, 'Confirmação de E-mail')) return;
