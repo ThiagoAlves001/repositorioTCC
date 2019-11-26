@@ -8,6 +8,7 @@
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         
+        
         <style>
          .card-deck {
              justify-content: center;
@@ -26,10 +27,10 @@
                                 <div class="card" style="width: 18rem; margin-top: 4%">
                                     <div class="card-body">
                                         <h5 class="card-title"><span th:text="${trabalho.tema}"></span></h5>
-                                        <h6 class="card-subtitle mb-2 text-muted"><span th:text="${trabalho.aluno.nome}"></span></h6>
+                                        <h6 class="card-subtitle mb-2 text-muted">Aluno: <span th:text="${trabalho.aluno.nome}"></span></h6>
                                       <p class="card-text"><span th:text="${trabalho.breve_resumo}"></span></p>
-                                      <a href="#" class="card-link">Link do card</a>
-                                      <a href="#" class="card-link">Outro link</a>
+                                      <a href="#" class="card-link">Download do TCC</a>
+                                      <a href="#" class="card-link">Resumo do TCC</a>
                                     </div>
                                 </div>
                             </div>

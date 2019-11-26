@@ -4,59 +4,93 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<div th:fragment="menu">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">SISGAT</a>
+<div th:fragment="menu" >
+      <nav class="navbar navbar-expand-lg " style="margin-top: 50px; background:#54FF9F">
+          <a class="navbar-brand" href="/"><b>SISGAT</b></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
+  <!--
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
        <li class="nav-item active">
-        <a class="nav-link" href="listaBancas">BANCAS AVALIADORAS</a>
-      </li>
-       <li class="nav-item active">
-        <a class="nav-link" href="listaTrabalhos">TRABALHOS</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="listaPessoas">ORIENTADORES</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Orientadores
+           <a class="nav-link" href="listaBancas"><b>BANCAS AVALIADORAS</b></a>
+      </li>    
+  -->
+      
+      <ul class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="listaBancas" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <b>BANCAS AVALIADORAS </b>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="testeValidacao">Cadastro Orientadores</a>
-          <a class="dropdown-item" href="pesquisaOrientador">Pesquisa de orientador</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a class="dropdown-item" href="listaBancas">Listas de Bancas Avaliadoras</a>
+          
+         
         </div>
-      </li>
-      
-      <li class="nav-item active">
-        <a class="nav-link" href="listaAlunos">ALUNOS</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="listaCursos">CURSOS</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          MENU
+      </ul>
+     
+       <ul class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="listaTrabalhos" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <b>GERENCIAR TRABALHO</b>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="testeValidacao">validacao do cpf</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a class="dropdown-item" href="listaTrabalhos">GERENCIAR TRABALHO</a>
+          
+         
         </div>
-      </li>
+      </ul>
       
+   <ul class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="listaTrabalhosCards" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <b>TRABALHOS CONCLUIDOS</b>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="listaTrabalhosCards">Listas de Trabalhos Concluídos</a>
+          
+         
+        </div>
+      </ul>
+  
+    <ul class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="listaPessoas" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <b>ORIENTADORES</b>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="listaPessoas">Listas de Orientadores</a>
+          
+         
+        </div>
     </ul>
+  
+    <ul class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="listaPessoas" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <b>Gerenciar cursos</b>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="listaCursos">Lista de cursos</a>
+          
+         
+        </div>
+    </ul>
+      
+      
+      
+  
+      
+       
+    </ul>
+     
     
-      <li ><a href="#"><span class="glyphicon glyphicon-user"></span> Cadastre-se</a></li>
-      <li ><a href="/"><span class="glyphicon glyphicon-log-in"></span>Entrar</a></li>
     
+    <ul>
+    <form class="form-inline my-2 my-lg-0">
+        <a href="#">Aluno</a>
+        <button class="btn btn-outline-danger my-2 my-sm-0 " type="submit" ><a href="/">Sair</a></button>
+    </form>
+    </ul>
   </div>
+
+     
 </nav>
 </div>

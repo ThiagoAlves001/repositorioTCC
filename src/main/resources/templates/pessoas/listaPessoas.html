@@ -39,24 +39,22 @@
                                             <input required type="text" class="form-control" id="nome" name="nome" placeholder="Digite aqui o nome " />
                                         </div>
                                         
+                                                                                
                                         <div class="form-group col-md-4">
-                                            <label for="total_aluno_orientados">Total de Aluno Orientados</label> 
-                                            <input required type="number" class="form-control" id="total_aluno_orientados" name="total_aluno_orientados" placeholder="Digite aqui o total de alunos orientados " />
-                                        </div>
-                                        
-                                        <div class="form-group col-md-8">
                                             <label for="cpf">CPF</label> 
                                             <input required type="number" class="form-control" id="cpf" name="cpf" placeholder="Digite aqui o cpf " />
                                         </div>
                                          
-                                        <div class="form-group col-md-4">
-                                            <label for="vagas_orientacao">Vagas para Orientação</label> 
-                                            <input required type="number" class="form-control" id="vagas_orientacao" name="vagas_orientacao" placeholder="Digite as vagas_orientacao " />
-                                        </div>
+                                       
                                          
                                         <div class="form-group col-md-8">
                                             <label for="link_lattes">Link Lattes</label> 
                                             <input required type="text" class="form-control" id="link_lattes" name="link_lattes" placeholder="Digite Link Lattes " />
+                                        </div>
+                                        
+                                         <div class="form-group col-md-4">
+                                            <label for="vagas_orientacao">Vagas para Orientação</label> 
+                                            <input required type="number" class="form-control" id="vagas_orientacao" name="vagas_orientacao" placeholder="Digite as vagas para orientacao " />
                                         </div>
                                         
                                         <div class="form-group col-md-8">
@@ -64,7 +62,7 @@
                                             <input required type="text" class="form-control" id="area_conhecimento" name="area_conhecimento" placeholder="Informe a Área de Conhecimento " />
                                         </div>
                                         
-                                        <div class="form-group col-md-8">
+                                        <div class="form-group col-md-4">
                                             <label for="email">Email</label> 
                                             <input required type="text" class="form-control" id="email" name="email" placeholder="Informe o Email " />
                                         </div>
@@ -87,7 +85,7 @@
                                        
                                         </div> 
                                         
-                                        <div class="form-group col-md-8">
+                                        <div class="form-group col-md-4">
                                             <label for="funcao">Função</label> 
                                             <input required type="text" class="form-control" id="funcao" name="funcao" placeholder="Digite a função " />
                                         </div>
@@ -143,7 +141,14 @@
                                     <input type="hidden" name="id" th:value="${pessoa.id}" />
                                     <button type="submit" onclick="return confirm('Deseja realmente excluir o registro?')" class="btn btn-danger">Remover</button>
                                 </form>
-                            </td> 
+                            </td>
+                            <td>
+                                <form action="" method="post">
+                                    <input type="hidden" name="id" th:value="${pessoa.id}" />
+                                    <button type="submit" onclick="return confirm('Deseja realmente alterar o registro?')" class="btn btn-warning">alterar</button>
+                                </form>
+                            </td>
+                            
                         </tr>
                       </table>                        
                 </div>

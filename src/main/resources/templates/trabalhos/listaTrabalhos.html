@@ -46,64 +46,41 @@
 			
 			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
 			      <div class="card-body">
-			      	<form action="salvarTrabalho" method="post">
+			      	<form action="salvarBanca" method="post">
                                     <div class="form-row">
                                         
                                         <div class="form-group col-md-8">
-                                            <label for="area_da_pesquisa">Área de Pesquisa</label> 
-                                            <input required type="text" class="form-control" id="area_da_pesquisa" name="area_da_pesquisa" placeholder="Informe a area da pesquisa " />
-                                        </div>
-                                       
-                                        
-                                        
-                                        <div class="form-group col-md-4">
-                                            <label for="status_de_conclusao">Status de Conclusão</label> 
-                                            <select required  name="status_de_conclusao" class="form-control ">
-                                                <option  value="Em Desenvolvimento"  >Em Desenvolvimento</option>
-                                                <option  value="Concluido"  >Concluido</option>
-                                             </select>
-                                           
+                                            <label for="area_da_pesquisa">Área da Pesquisa</label> <input type="text" required
+                                                                              class="form-control" id="area_da_pesquisa" name="area_da_pesquisa" placeholder=" Informe aqui a Area da Pesquisa" />
                                         </div>
                                         
-                                        <div class="form-group col-md-8">
-                                            <label for="pdf_tcc">PDF TCC</label> 
-                                            <input required type="text" class="form-control" id="pdf_tcc" name="pdf_tcc" placeholder="Informe o tcc" />
+                                         <div class="form-group col-md-4">
+                                            <label for="status_de_conclusao"> Status de conclusão</label>
+                                                <select name="status_de_conclusao" id="status_de_conclusao"  class="form-control">
+                                                    <option value="Em Desenvolvimento"  class="form-control">Em Desenvolvimento</option>
+                                                    <option value="concluido"  class="form-control">Concluído</option>
+                                                </select>
+                                            
+                                        </div>
+                                         <div class="form-group col-md-8">
+                                            <label for="pdf_tcc">Pdf do TCC</label> <input type="text" required
+                                                                              class="form-control" id="pdf_tcc" name="pdf_tcc" placeholder=" Insira o tcc do trabalho" />
                                         </div>
                                         
-                                        <div class="form-group col-md-4">
-                                            <label for="nota_da_apresentacao">Nota da Apresentacao</label> 
-                                            <input required type="number" class="form-control" id="nota_da_apresentacao" name="nota_da_apresentacao" placeholder="Informe a noa da apresentação" />
-                                        </div>
-                                       
-                                        
-                                                                                
-                                        <div class="form-group col-md-8">
-                                           <label for="orientador">Orientador</label> 
-                                        <select required data-size="2" class="form-control" name="orientadorID">
-                                            <option th:each="orientador : ${orientadores}" th:value="${orientador.id}" th:text="${orientador.nome}"></option>
+                                        <div class="form-group col-md-8 " >
+                                           <label for="orientador" >Orientador</label> 
+                                        <select required data-size="2" class="form-control" name="orientadorID" >
+                                            <option th:each="orientador : ${orientadores}" th:value="${orientador.id}" th:text="${orientador.nome}" ></option>
                                         </select>
                                         </div>
                                         
                                         <div class="form-group col-md-4">
-                                            <label for="data_para_apresentacao">Data para Apresentação</label> 
-                                            <input required class="datepicker form-control" autocomplete="off" name="data_para_apresentacao" data-date-format="dd/mm/yyyy"  />
-                                        </div>
-                                        
-                                        
-                                        <div class="form-group col-md-8">
                                            <label for="curso">Curso</label> 
-                                        <select required class="form-control" name="cursoID" >
-                                            <option  th:each="cur : ${listaDeCursos}" th:value="${cur.id}" th:text="${cur.nome}" ></option>
+                                        <select required class="form-control" name="cursoID">
+                                            <option th:each="cur : ${listaDeCursos}" th:value="${cur.id}" th:text="${cur.nome}"></option>
                                         </select>
                                         </div>
                                         
-                                        
-                                        <div class="form-group col-md-4">
-                                            <label for="tema">Tema do Trabalho</label> 
-                                            <input required type="text" class="form-control" id="tema" name="tema" placeholder="Informe o tema" />
-                                        </div>
-                                        
-                                                                               
                                         <div class="form-group col-md-8">
                                         <label for="aluno">Aluno</label>
                                         <select required class="form-control" th:field="*{aluno.id}">
@@ -111,20 +88,32 @@
                                         </select>
                                         </div>
                                         
-                                        <div class="form-group col-md-8">
-                                            <label for="co_orientador">Co-orientador</label> 
-                                            <input required type="text" class="form-control" id="co_orientador" name="co_orientador" placeholder="Informe o co-orientador" />
+                                        <div class="form-group col-md-4">
+                                           <label for="data_para_apresentacao">Data para apresentacao</label>
+                                           <input required class="datepicker form-control" autocomplete="off" name="data_para_apresentacao" data-date-format="dd/mm/yyyy">
                                         </div>
                                         
-                                                                                                                       
                                         <div class="form-group col-md-8">
-                                            <p>Breve Resumo</p>
-                                             <textarea  required type="text" id="breve_resumo" name="breve_resumo" rows="5" cols="33" class="form-control" placeholder="Informe um breve resumo">
-                                            </textarea>
-                                             
+                                            <label for="co_orientador">Co-Orientador</label> <input type="text" required
+                                                                              class="form-control" id="co_orientador" name="co_orientador" placeholder=" Informe aqui o seu co-orientador" />
+                                        </div>
+                                         
+                                            
+                                        
+                                        <div class="form-group col-md-8">
+                                                <label for="breve_resumo" >Breve Resumo</label>
+
+                                                <textarea id="breve_resumo" name="breve_resumo" class="form-control"
+                                                                                    rows="5" cols="33">
+                                                    
+                                                </textarea>
+                                        </div>
+                                        <div class="form-group col-md-8">
+                                            <label for="tema">Tema</label> <input type="text" required
+                                                                              class="form-control" id="tema" name="tema" placeholder=" Informe aqui o tema do trabalho" />
                                         </div>
                                         
-                                                                               
+                                        
                                     </div>
                                     <div class="form-row">
                                         <button type="submit" class="btn btn-success">Salvar</button>
@@ -136,22 +125,23 @@
                     </div>
                     
                     <hr/>
+                    
                     <div class="col-md-12"  style="margin-top: 2%">
                        <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false">
                         <thead>
                           <tr>
                             <th>Area da Pesquisa</th>
                             <th>Status de Conclusão</th>
-                            <th>Pdf do TCC</th>
+                            <th>Pdf do tcc</th>
                             <th>Orientador</th>
                             <th>Aluno</th>
                             <th>Curso</th>
-                            <th>Co-orientador</th>
+                            <th>co-orientador</th>
                             <th>Breve Resumo</th>
                             <th>Tema</th>
                             <th>Data para Apresentação</th>
                             <th>Nota da Apresentação</th>
-                            <th>Ações</th>
+                            
                           </tr>
                         </thead>
                         <tr th:each="trabalho: ${trabalhos}">
@@ -172,12 +162,20 @@
                                     <input type="hidden" name="id" th:value="${trabalho.id}" />
                                     <button type="submit" onclick="return confirm('Deseja realmente excluir o registro?')" class="btn btn-danger">Remover</button>
                                 </form>
-                            </td> 
+                                 
+                            </td>
+                            <td>
+                                <form action="" method="post">
+                                    <input type="hidden" name="id" th:value="${trabalho.id}" />
+                                    <button type="submit" onclick="return confirm('Deseja realmente alterar o registro?')" class="btn btn-warning">alterar</button>
+                                </form>
+                            </td>
                         </tr>
                       </table>                        
                 </div>
             </div>
-            <div th:insert="~{footer :: rodape}"></div>
+            
         </div>
+            <div th:insert="~{footer :: rodape}"></div>
     </body>
 </html>

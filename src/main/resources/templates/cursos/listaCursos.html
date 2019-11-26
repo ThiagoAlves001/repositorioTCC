@@ -72,12 +72,19 @@
                                     <input type="hidden" name="id" th:value="${curso.id}" />
                                     <button type="submit" onclick="return confirm('Deseja realmente excluir o registro?')" class="btn btn-danger">Remover</button>
                                 </form>
-                            </td> 
+                            </td>
+                            <td>
+                                <form action="" method="post">
+                                    <input type="hidden" name="id" th:value="${curso.id}" />
+                                    <button type="submit" onclick="return confirm('Deseja realmente alterar o registro?')" class="btn btn-warning">alterar</button>
+                                </form>
+                            </td>
                         </tr>
                       </table>                        
                 </div>
             </div>
-            <div th:insert="~{footer :: rodape}"></div>
+            
         </div>
+            <div th:insert="~{footer :: rodape}"></div>
     </body>
 </html>
