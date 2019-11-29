@@ -61,9 +61,9 @@ public class UsuarioController {
         if (login.equals("")) {
             listaDeUsuarios = service.obterTodos();
         } else {
-            listaDeUsuarios = service.obterTodosPorLogin(login);
+            //listaDeUsuarios = service.obterTodosPorLogin(login);
         }
-        model.addAttribute("usuarios", listaDeUsuarios);
+        //model.addAttribute("usuarios", listaDeUsuarios);
         return "listaUsuarios";
     }
 }

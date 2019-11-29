@@ -12,8 +12,20 @@
         <script src="bootstrap/js/bootstrap-table-pt-BR.js"></script>
         
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    
-    
+        
+        <script>
+            function radioExterno(){
+                document.getElementById('siape').disabled = true;
+                document.getElementById('siape').value = "";
+                document.getElementById('instituicao').value = "";
+                document.getElementById('instituicao').disabled = false;
+            }
+            function radioInterno(){
+                document.getElementById('siape').disabled = false;
+                document.getElementById('instituicao').disabled = true;
+                document.getElementById('instituicao').value = "IFMS";
+            }
+        </script>
     </head>
     <body>
         <div class="container">
@@ -40,65 +52,59 @@
                                         </div>
                                         
                                         <div class="form-group col-md-4">
-                                            <label for="total_aluno_orientados">Total de Aluno Orientados</label> 
-                                            <input required type="number" class="form-control" id="total_aluno_orientados" name="total_aluno_orientados" placeholder="Digite aqui o total de alunos orientados " />
-                                        </div>
-                                        
-                                        <div class="form-group col-md-8">
                                             <label for="cpf">CPF</label> 
                                             <input required type="number" class="form-control" id="cpf" name="cpf" placeholder="Digite aqui o cpf " />
                                         </div>
                                          
                                         <div class="form-group col-md-4">
-                                            <label for="vagas_orientacao">Vagas para Orientação</label> 
-                                            <input required type="number" class="form-control" id="vagas_orientacao" name="vagas_orientacao" placeholder="Digite as vagas_orientacao " />
-                                        </div>
-                                         
-                                        <div class="form-group col-md-8">
-                                            <label for="link_lattes">Link Lattes</label> 
-                                            <input required type="text" class="form-control" id="link_lattes" name="link_lattes" placeholder="Digite Link Lattes " />
-                                        </div>
-                                        
-                                        <div class="form-group col-md-8">
                                             <label for="area_conhecimento">Área de Conhecimento</label> 
                                             <input required type="text" class="form-control" id="area_conhecimento" name="area_conhecimento" placeholder="Informe a Área de Conhecimento " />
                                         </div>
                                         
-                                        <div class="form-group col-md-8">
+                                        <div class="form-group col-md-4">
+                                            <label for="link_lattes">Link Lattes</label> 
+                                            <input required type="text" class="form-control" id="link_lattes" name="link_lattes" placeholder="Digite Link Lattes " />
+                                        </div>
+                                        <div class="form-group col-md-4">
                                             <label for="email">Email</label> 
                                             <input required type="text" class="form-control" id="email" name="email" placeholder="Informe o Email " />
                                         </div>
-                                         
-                                         
+                                        <div class="form-group col-md-3">
+                                            <label for="vagas_orientacao">Vagas para Orientação</label> 
+                                            <input required type="number" class="form-control" id="vagas_orientacao" name="vagas_orientacao" placeholder="Digite as vagas_orientacao " />
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="total_aluno_orientados">Total de Aluno Orientados</label> 
+                                            <input required type="number" class="form-control" id="total_aluno_orientados" name="total_aluno_orientados" placeholder="Digite aqui o total de alunos orientados " />
+                                        </div>
                                         
-                                        <div class="form-group col-md-8">
-                                             <p><b>Pessoa Externo?</b></p>
-                                            <p> <input require type="radio" value="sim" name="pessoa_externo" id="sim" onclick="document.getElementById('siape').enable = !this.checked;" > <label for="sim" >SIM</label>
-                                            <p> <input require type="radio" value="nao" name="pessoa_externo" id="nao" onclick="document.getElementById('siape').disabled = !this.checked; document.getElementById('funcao').disabled = !this.checked;
-                                                document.getElementById('instituicao').disabled = !this.checked;" > <label for="nao" >NÃO</label>
+                                        <div class="form-group col-md-12">
+                                             <p><b>Pessoa Externa?</b></p>
+                                            <p> <input require type="radio" value="sim" name="pessoa_externo" id="sim" onclick="radioExterno();" > <label for="sim" >SIM</label>
+                                            <p> <input require type="radio" value="nao" name="pessoa_externo" id="nao" checked onclick="radioInterno();" > <label for="nao" >NÃO</label>
                                             <br>
-                                            
-                                        <b>SIAPE: </b>  
-                                            <p><input required type="text" class="form-control" name="siape" id="siape" size="40" disabled="disabled" placeholder="Informe o SIAPE" > </p>
-                                            <br>
-                                       
-                                        <b>Instituição </b> 
-                                            <p><input required type="text" class="form-control" name="instituicao" id="instituicao" size="40" disabled="disabled" placeholder="Informe a Instituição" > </p>
-                                       
                                         </div> 
                                         
-                                        <div class="form-group col-md-8">
+                                        <div class="form-group col-md-4">
+                                            <label for="siape">Siape</label>  
+                                            <p><input required type="text" class="form-control" name="siape" id="siape" placeholder="Informe o SIAPE" > </p>
+                                        </div>
+                                       
+                                        <div class="form-group col-md-4">
+                                            <label for="instituicao">Instituição</label>   
+                                            <p><input required type="text" value="IFMS" class="form-control" name="instituicao" id="instituicao" disabled="disabled" placeholder="Informe a Instituição" > </p>
+                                        </div>
+                                        <div class="form-group col-md-4">
                                             <label for="funcao">Função</label> 
                                             <input required type="text" class="form-control" id="funcao" name="funcao" placeholder="Digite a função " />
                                         </div>
-                                        
-                                        </div>  
+                                                                                
+                                        </div>
+                                        <div class="form-row">
+                                            <button type="submit" class="btn btn-success">Salvar</button>
+                                        </div>
                                     </div>
                                         
-                                    
-                                    <div class="form-row">
-                                        <button type="submit" class="btn btn-success">Salvar</button>
-                                    </div>
                                 </form>
 			      </div>
 			    </div>
@@ -111,27 +117,27 @@
                         <thead>
                           <tr>
                             <th>Nome</th>
-                            <th>total de alunos orientados</th>
+                            
                             <th>CPF</th>
                             <th>Link Lattes</th>
-                            <th>Area de conhecimento</th>
+                            <th>Area</th>
                             <th>Email</th>
-                            <th>vagas pra orientação</th>
-                            <th>pessoa Externo</th>
+                            <th>orientados</th>
+                            <th>vagas</th>
+                            <th>Externo</th>
                             <th>SIAPE</th>
                             <th>Função</th>
                             <th>Instituição</th>
-                            <th>Ações</th>
-                            
+                            <th>Ações</th>                            
                           </tr>
                         </thead>
                         <tr th:each="pessoa: ${pessoas}">
                             <td><span th:text="${pessoa.nome}"></span></td>
-                            <td><span th:text="${pessoa.total_alunos_orientados}"></span></td>
                             <td><span th:text="${pessoa.cpf}"></span></td>
                             <td><span th:text="${pessoa.link_lattes}"></span></td>
                             <td><span th:text="${pessoa.area_conhecimento}"></span></td>
                             <td><span th:text="${pessoa.email}"></span></td>
+                            <td><span th:text="${pessoa.total_alunos_orientados}"></span></td>
                             <td><span th:text="${pessoa.vagas_orientacao}"></span></td>
                             <td><span th:text="${pessoa.pessoa_externo}"></span></td>
                             <td><span th:text="${pessoa.siape}"></span></td>

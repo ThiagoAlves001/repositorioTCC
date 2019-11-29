@@ -7,6 +7,7 @@ package br.com.repositoriotcc.service;
 
 import br.com.repositoriotcc.model.UsuarioModel;
 import br.com.repositoriotcc.repository.UsuarioRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,12 @@ public class UsuarioService {
         return usuarios;
     }
 
-    public Iterable<UsuarioModel> obterTodosPorLogin(String login){
-        Iterable<UsuarioModel> usuarios = repository.findByLogin(login);
-        return usuarios;
+    public UsuarioModel obterPorLogin(String login){
+        List<UsuarioModel> usuarios = repository.findByLogin(login);
+        if (usuarios.isEmpty()) {
+            return null;
+        }
+        return usuarios.get(0);
     }
     
     public void salvar(UsuarioModel usuario){

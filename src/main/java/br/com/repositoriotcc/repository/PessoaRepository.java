@@ -12,4 +12,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface PessoaRepository extends CrudRepository<PessoaModel, Long>{
 	List<PessoaModel> findByNome(String nome);
+        Iterable<PessoaModel> findTop10ByNomeContaining(String nome);
 }

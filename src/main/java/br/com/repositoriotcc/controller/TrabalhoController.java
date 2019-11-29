@@ -6,13 +6,17 @@
 package br.com.repositoriotcc.controller;
 
 import br.com.repositoriotcc.model.AlunoModel;
+import br.com.repositoriotcc.model.BancaModel;
 import br.com.repositoriotcc.model.CursoModel;
 import br.com.repositoriotcc.model.PessoaModel;
 import br.com.repositoriotcc.model.TrabalhoModel;
 import br.com.repositoriotcc.service.AlunoService;
+import br.com.repositoriotcc.service.BancaService;
 import br.com.repositoriotcc.service.CursoService;
 import br.com.repositoriotcc.service.PessoaService;
 import br.com.repositoriotcc.service.TrabalhoService;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +29,8 @@ public class TrabalhoController {
 
     @Autowired
     private TrabalhoService service;    
+    @Autowired
+    private BancaService bancaService;
     @Autowired
     private PessoaService pessoasService;    
     @Autowired
@@ -71,9 +77,9 @@ public class TrabalhoController {
     public String deletarTrabalho(Model model, @RequestParam("id") Long id) {
         service.deletarPorId(id);
 
-        Iterable<TrabalhoModel> listaDeTrabalhos = service.obterTodos();
-        model.addAttribute("trabalhos", listaDeTrabalhos);
-        return "trabalhos/listaTrabalhos";
+        //Iterable<TrabalhoModel> listaDeTrabalhos = service.obterTodos();
+        //model.addAttribute("trabalhos", listaDeTrabalhos);
+        return "redirect:/listaTrabalhos";
     }
 
     @RequestMapping("buscarTrabalho")
@@ -91,9 +97,25 @@ public class TrabalhoController {
     @RequestMapping("listaTrabalhosCards")
     public String listaTrabalhoCards(Model model) {
 
-        Iterable<TrabalhoModel> listaDeTrabalhos = service.obterTodos();
-        model.addAttribute("trabalhos", listaDeTrabalhos);
+        List<TrabalhoModel> listaDeTrabalhosSemBanca = new ArrayList<>();
+        Iterable<TrabalhoModel> listaDeTrabalhos = service.obterTodosComDataDeApresentacaoMaiorQueDataAtual();
+        for (TrabalhoModel trabalho : listaDeTrabalhos) {
+            if (trabalho.getBancasQueFoiRelacionado().isEmpty()) {
+                listaDeTrabalhosSemBanca.add(trabalho);
+            }
+        }
+        model.addAttribute("trabalhos", listaDeTrabalhosSemBanca);
+        Iterable<BancaModel> listaDeBancas = bancaService.obterTodos();
+        model.addAttribute("bancas", listaDeBancas);
         
         return "trabalhos/listaTrabalhosCards";
+    }
+    
+    @RequestMapping(value = "detalhesTrabalho", method = RequestMethod.GET)
+    public String detalhesBanca(Model model, @RequestParam("idTrabalho") Long idTrabalho, @RequestParam("idBanca") Long idBanca) {
+        TrabalhoModel trabalho = service.obterPorId(idTrabalho);
+        model.addAttribute("trabalho", trabalho);
+        model.addAttribute("idBanca", idBanca);
+        return "trabalhos/detalhesTrabalho";
     }
 }

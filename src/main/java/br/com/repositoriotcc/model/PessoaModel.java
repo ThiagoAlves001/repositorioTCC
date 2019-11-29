@@ -5,15 +5,20 @@
  */
 package br.com.repositoriotcc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-@Entity(name = "pessoa")
+@Entity
+@Table(name = "pessoa")
 public class PessoaModel implements Serializable{
-    
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +34,32 @@ public class PessoaModel implements Serializable{
     private String siape;
     private String funcao;
     private String instituicao;
+    
+    @JsonIgnore
+    @ManyToMany(mappedBy = "pessoasQueParticiparamDaBanca")
+    private List<BancaModel> bancasQueParticipou;
     // private int id_pessoa;
+
+    @Transient
+    private List<String> nomesParaBuscaEmAtividades;
+
+    public List<String> getNomesParaBuscaEmAtividades() {
+        return nomesParaBuscaEmAtividades;
+    }
+
+    public void setNomesParaBuscaEmAtividades(List<String> nomesParaBuscaEmAtividades) {
+        this.nomesParaBuscaEmAtividades = nomesParaBuscaEmAtividades;
+    }
+    
+    
+    
+    public List<BancaModel> getBancasQueParticipou() {
+        return bancasQueParticipou;
+    }
+
+    public void setBancasQueParticipou(List<BancaModel> bancasQueParticipou) {
+        this.bancasQueParticipou = bancasQueParticipou;
+    }
 
     public long getId() {
         return id;

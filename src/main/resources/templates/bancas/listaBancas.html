@@ -6,28 +6,127 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
         <link href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css" rel="stylesheet">
         <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
         <script src="bootstrap/js/bootstrap-table-pt-BR.js"></script>
-        
+
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    
-      
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        
+
         <script src="datepicker/js/bootstrap-datepicker.js"></script>
         <link rel="stylesheet" href="datepicker/css/datepicker.css">
         <script src="bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.pt-BR.js"></script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="validacpfjs/jquery-3.4.1.min.js"></script>
+
         <script>
             $(document).ready(function () {
-              $('.datepicker').datepicker({
+                $('.datepicker').datepicker({
                     language: 'pt-BR',
                     autoclose: 1
-              });
-            });		
+                });
+
+                $('#buscarPessoaResponsavel').click(function () {
+                    let nomeParaBuscar = document.getElementById('nomeBusca').value;
+                    let varAjax = {};
+
+                    varAjax["nomeParaBusca"] = nomeParaBuscar;
+                    let dados = JSON.stringify(varAjax);
+                    jQuery.ajax({
+                        type: "POST",
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        url: "buscarPessoaPorAjax",
+                        data: dados,
+                        success: function (data)
+                        {
+                            while (document.getElementById('tabelaPessoa').rows.length > 1) {
+                                document.getElementById('tabelaPessoa').deleteRow(1);
+                            }
+
+                            $.each(data, function (key) {
+                                let newRow = $("<tr>");
+                                let cols = "";
+                                cols += '<td>' + data[key].nome + '</td>';
+                                cols += '<td>' + data[key].cpf + '</td>';
+                                cols += '<td>' + data[key].email + '</td>';
+                                cols += '<td class="actions">';
+                                cols += '<input type="button" class="btn btn-success" onclick="relaciona(\'' + data[key].nome + '\', ' + data[key].id + ');" value="relacionar">';
+                                cols += '</td>';
+                                newRow.append(cols);
+                                $("#tabelaPessoa").append(newRow);
+                            });
+                        },
+                        error: onErrorVisualizarResumo()
+                    });
+
+                    return false;
+                });
+
+                function onErrorVisualizarResumo() {
+                    console.log(arguments);
+                }
+
+                $('.divDeExibicao').css("display", "none");
+            });
+
+            function relaciona(nome, id) {
+                while (document.getElementById('tabelaPessoa').rows.length > 1) {
+                    document.getElementById('tabelaPessoa').deleteRow(1);
+                }
+
+                let divRelacionados = document.getElementById("divDosRelacionados");
+                let input = document.createElement("INPUT");
+                //let inputHidden = document.createElement("INPUT");
+                let divInput = document.createElement("DIV");
+                let divBotao = document.createElement("DIV");
+                let titulo = document.createElement('h5');
+                let botao = document.createElement("INPUT");
+
+                divInput.className = "form-group col-md-4";
+                divInput.id = "divInputID" + id;
+                divBotao.className = "form-group col-md-2";
+                divBotao.id = "divBotaoID" + id;
+
+                let textoTitulo = document.createTextNode("Relacionado");
+                titulo.appendChild(textoTitulo);
+                //divInput.appendChild(titulo);
+
+                input.type = "text";
+                input.classList.add("form-control");
+                input.name = "nomesParaBuscaEmAtividades";
+                input.readOnly = "true";
+                input.id = id;
+                input.value = nome + "-" + id;
+                divInput.appendChild(input);
+
+                /*inputHidden.type = "hidden";
+                 inputHidden.name = "pessoasResponsaveisMinistrantesAtividade.idPessoa";
+                 inputHidden.value = id;
+                 divInput.appendChild(inputHidden);*/
+
+                botao.value = "desvincular";
+                botao.setAttribute('type', 'button');
+                botao.setAttribute('onclick', 'desvincular(' + id + ');');
+                botao.setAttribute('class', 'btn btn-danger');
+                divBotao.appendChild(botao);
+
+                divRelacionados.appendChild(divInput);
+                divRelacionados.appendChild(divBotao);
+            }
+
+            function desvincular(id) {
+                let node = document.getElementById("divInputID" + id);
+                node.parentNode.removeChild(node);
+                node = document.getElementById("divBotaoID" + id);
+                node.parentNode.removeChild(node);
+            }
         </script>
     </head>
     <body>
@@ -35,102 +134,119 @@
             <div class="row">
                 <div class="col-md-12">
                     <div th:insert="~{nav :: menu}"></div>
-                    
+
                     <div class="accordion" id="accordionExample" style="margin-top: 2%">
-			<div class="card">
-			    <div class="card-header" id="headingOne">
-			      <h5 class="mb-0">
-			        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Inserir Nova Banca Avaliadora</button>
-			      </h5>
-			    </div>
-			
-			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-			      <div class="card-body">
-			      	<form action="salvarBanca" method="post">
-                                    <div class="form-row">
-                                        
-                                        <div class="form-group col-md-8">
-                                          <label for="trabalho">Trabalho</label> 
-                                            <select required data-size="2" class="form-control" name="trabalhoID">
-                                                <option  th:each="trabalho : ${trabalhos}" th:value="${trabalho.id}" th:text="${trabalho.tema}" placeholder="Escolha um orientador " ></option>
-                                            </select>
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Inserir Nova Banca Avaliadora</button>
+                                </h5>
+                            </div>
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <form action="salvarBanca" method="post">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-8">
+                                                <label for="trabalho">Trabalho</label> 
+                                                <select required data-size="2" class="form-control" name="trabalhoID">
+                                                    <option  th:each="trabalho : ${listaDeTrabalhos}" th:value="${trabalho.id}" th:text="${trabalho.tema}" placeholder="Escolha um orientador " ></option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="dataDaBanca">Data da banca</label>
+                                                <input required class="datepicker form-control" autocomplete="off" name="dataDaBanca" data-date-format="dd/mm/yyyy">
+                                            </div>
+                                            <div class="form-group col-md-8 divDeExibicao">
+                                                <label for="inputOrientador" >Orientador</label> 
+                                                <input class="form-control" id="inputOrientador" name="inputOrientador" disabled>
+                                            </div>
+                                            <div class="form-group col-md-8 divDeExibicao">
+                                                <label for="curso">Curso</label> 
+                                                <input class="form-control" id="inputCurso" name="inputCurso" disabled>
+                                            </div>
+                                            <div class="form-group col-md-8 divDeExibicao">
+                                                <label for="aluno">Aluno</label>
+                                                <input class="form-control" id="inputAluno" name="inputAluno" disabled>
+                                            </div>
+
                                         </div>
-                                        
-                                        
-                                        
-                                        <div class="form-group col-md-4">
-                                           <label for="dataDaBanca">Data da banca</label>
-                                           <input required class="datepicker form-control" autocomplete="off" name="dataDaBanca" data-date-format="dd/mm/yyyy">
+                                        <div id="collapseOne" class="collapse show col-md-12" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <div class="form-row" align="center">
+                                                    <div class="custom-control custom-radio col-md-6">
+                                                        <input type="text" class="form-control" id="nomeBusca" name="nomeBusca" placeholder="Nome da pessoa que deseja relacionar como banca">
+                                                    </div>
+                                                    <input type="button" class="btn btn-primary" id="buscarPessoaResponsavel" value="Buscar">
+                                                </div>
+                                                <table id="tabelaPessoa" data-page-size="10" data-toggle="table" data-search="false" data-pagination="false" data-show-columns="false" style="margin-top: 2%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th table-active>Nome</th>
+                                                            <th>CPF</th>
+                                                            <th>email</th>
+                                                            <th>#</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tr th:each="pessoa: ${listaDePessoas}">
+                                                        <td><span th:text="${pessoa.nome}"></span></td>
+                                                        <td><span th:text="${pessoa.CPF}"></span></td>
+                                                        <td><span th:text="${pessoa.email}"></span></td>
+                                                        <td><span th:text="${pessoa.email}"></span></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
-                                        
-                                        <div class="form-group col-md-8 " >
-                                           <label for="orientador" >Orientador</label> 
-                                        <select required data-size="2" class="form-control" name="orientadorID" >
-                                            <option th:each="orientador : ${orientadores}" th:value="${orientador.id}" th:text="${orientador.nome}" ></option>
-                                        </select>
+                                        <hr>
+                                        <div id="divDosRelacionados" class="form-row">
+
                                         </div>
-                                        <div class="form-group col-md-8">
-                                           <label for="curso">Curso</label> 
-                                        <select required class="form-control" name="cursoID">
-                                            <option th:each="cur : ${listaDeCursos}" th:value="${cur.id}" th:text="${cur.nome}"></option>
-                                        </select>
+                                        <hr>
+                                        <div class="form-row">
+                                            <button type="submit" class="btn btn-success">Salvar</button>
                                         </div>
-                                        
-                                        <div class="form-group col-md-8">
-                                        <label for="aluno">Aluno</label>
-                                        <select required class="form-control" th:field="*{aluno.id}">
-                                            <option th:each="al : ${listaDeAlunos}" th:value="${al.id}" th:text="${al.nome}"></option>
-                                        </select>
-                                        </div>
-                                        
-                                        
-                                      
-                                        
-                                        
-                                    </div>
-                                    <div class="form-row">
-                                        <button type="submit" class="btn btn-success">Salvar</button>
-                                    </div>
-                                </form>
-			      </div>
-			    </div>
-			</div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
+
                     <hr/>
                     <div class="col-md-12"  style="margin-top: 2%">
-                       <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false">
-                        <thead>
-                          <tr>
-                            <th>Nome do Trabalho</th>
-                            <th>Nome do Orientador</th>
-                            <th>Nome do curso</th>
-                            <th>Nome do aluno</th>
-                            <th>Data da Banca</th>
-                            <th>Ações</th>
-                            
-                          </tr>
-                        </thead>
-                        <tr th:each="banca: ${banca_Avaliadora}">
-                            <td><span  th:text="${banca.trabalho.tema}"></span></td>
-                            <td><span  th:text="${banca.orientador.nome}"></span></td>
-                            <td><span  th:text="${banca.curso.nome}"></span></td>
-                            <td><span  th:text="${banca.aluno.nome}"></span></td>
-                            <td><span  th:text="${#dates.format(banca.dataDaBanca, 'dd/mm/yyyy')}"></span></td>
-                            
-                           
-                           
-                            <td>
-                                <form action="deletarBanca" method="post">
-                                    <input type="hidden" name="id" th:value="${banca.id}" />
-                                    <button type="submit" onclick="return confirm('Deseja realmente excluir o registro?')" class="btn btn-danger">Remover</button>
-                                </form>
-                            </td> 
-                        </tr>
-                      </table>                        
+                        <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false">
+                            <thead>
+                                <tr>
+                                    <th>Tema Trabalho</th>
+                                    <th>Orientador</th>
+                                    <th>Curso</th>
+                                    <th>Aluno</th>
+                                    <th>Data da Banca</th>
+                                    <th>Ações</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tr th:each="banca: ${bancas}">
+                                <td><span  th:text="${banca.trabalho.tema}"></span></td>
+                                <td><span  th:text="${banca.trabalho.orientador.nome}"></span></td>
+                                <td><span  th:text="${banca.trabalho.curso.nome}"></span></td>
+                                <td><span  th:text="${banca.trabalho.aluno.nome}"></span></td>
+                                <td><span  th:text="${#dates.format(banca.dataDaBanca, 'dd/MM/yyyy')}"></span></td>
+                                 <td>
+                                    <form action="editarBanca" method="get">
+                                        <input type="hidden" name="idBanca" th:value="${banca.id}" />
+                                        <button type="submit" class="btn btn-primary">Editar</button>
+                                    </form>
+                                </td> 
+                                <td>
+                                    <form action="deletarBanca" method="post">
+                                        <input type="hidden" name="id" th:value="${banca.id}" />
+                                        <button type="submit" onclick="return confirm('Deseja realmente excluir o registro?')" class="btn btn-danger">Remover</button>
+                                    </form>
+                                </td> 
+                            </tr>
+                        </table>                        
+                    </div>
                 </div>
+                <div th:insert="~{footer :: rodape}"></div>
             </div>
-            <div th:insert="~{footer :: rodape}"></div>
-        </div>
     </body>
 </html>

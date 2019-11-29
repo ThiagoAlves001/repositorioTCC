@@ -9,7 +9,9 @@ import br.com.repositoriotcc.model.TrabalhoModel;
 import br.com.repositoriotcc.repository.TrabalhoRepository;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -20,41 +22,45 @@ public class TrabalhoService {
     @Autowired
     private TrabalhoRepository repository;
 
-
-    public Iterable<TrabalhoModel> obterTodos(){
+    public Iterable<TrabalhoModel> obterTodos() {
         Iterable<TrabalhoModel> trabalhos = repository.findAll();
         return trabalhos;
     }
 
-    public Iterable<TrabalhoModel> obterTodosPorTema(String tema){
+    public Iterable<TrabalhoModel> obterTodosComDataDeApresentacaoMaiorQueDataAtual() {
+        Calendar dataAtual = new GregorianCalendar();
+        dataAtual.setTime(new Date());
+        Iterable<TrabalhoModel> trabalhos = repository.findAllByDataApresentacaoAfter(dataAtual);
+        return trabalhos;
+    }
+
+    public Iterable<TrabalhoModel> obterTodosPorTema(String tema) {
         Iterable<TrabalhoModel> trabalhos = repository.findByTema(tema);
         return trabalhos;
     }
-    
-     public TrabalhoModel obterPorId(Long id){
+
+    public TrabalhoModel obterPorId(Long id) {
         Optional<TrabalhoModel> trabalhoOptional = repository.findById(id);
         TrabalhoModel trabalho = new TrabalhoModel();
-        if(trabalhoOptional.isPresent()){
+        if (trabalhoOptional.isPresent()) {
             trabalho = trabalhoOptional.get();
         }
-        
+
         return trabalho;
     }
-     
-     public String getDateTime() { 
-	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
-	Date date = new Date(); 
-        
-	return dateFormat.format(date); 
-}
-     
-    
-    public void salvar(TrabalhoModel trabalho){
+
+    public String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+
+        return dateFormat.format(date);
+    }
+
+    public void salvar(TrabalhoModel trabalho) {
         repository.save(trabalho);
     }
-    
-    public void deletarPorId(Long id){
+
+    public void deletarPorId(Long id) {
         repository.deleteById(id);
     }
 }
-

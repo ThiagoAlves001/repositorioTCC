@@ -48,83 +48,62 @@
 			      <div class="card-body">
 			      	<form action="salvarTrabalho" method="post">
                                     <div class="form-row">
-                                        
-                                        <div class="form-group col-md-8">
+                                        <div class="form-group col-md-6">
+                                            <label for="tema">Tema do Trabalho</label> 
+                                            <input required type="text" class="form-control" id="tema" name="tema" placeholder="Informe o tema" />
+                                        </div>
+                                        <div class="form-group col-md-4">
                                             <label for="area_da_pesquisa">Área de Pesquisa</label> 
                                             <input required type="text" class="form-control" id="area_da_pesquisa" name="area_da_pesquisa" placeholder="Informe a area da pesquisa " />
                                         </div>
-                                       
-                                        
-                                        
-                                        <div class="form-group col-md-4">
-                                            <label for="status_de_conclusao">Status de Conclusão</label> 
+                                         <div class="form-group col-md-2">
+                                            <label for="dataApresentacao">Apresentação</label> 
+                                            <input required class="datepicker form-control" autocomplete="off" name="dataApresentacao" data-date-format="dd/mm/yyyy"  />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="aluno">Aluno</label>
+                                            <select required class="form-control" th:field="*{aluno.id}">
+                                                <option th:each="al : ${listaDeAlunos}" th:value="${al.id}" th:text="${al.nome}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                           <label for="curso">Curso</label> 
+                                            <select required class="form-control" name="cursoID" >
+                                                <option  th:each="cur : ${listaDeCursos}" th:value="${cur.id}" th:text="${cur.nome}" ></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="status_de_conclusao">Status</label> 
                                             <select required  name="status_de_conclusao" class="form-control ">
                                                 <option  value="Em Desenvolvimento"  >Em Desenvolvimento</option>
                                                 <option  value="Concluido"  >Concluido</option>
                                              </select>
-                                           
                                         </div>
-                                        
-                                        <div class="form-group col-md-8">
-                                            <label for="pdf_tcc">PDF TCC</label> 
-                                            <input required type="text" class="form-control" id="pdf_tcc" name="pdf_tcc" placeholder="Informe o tcc" />
-                                        </div>
-                                        
-                                        <div class="form-group col-md-4">
-                                            <label for="nota_da_apresentacao">Nota da Apresentacao</label> 
-                                            <input required type="number" class="form-control" id="nota_da_apresentacao" name="nota_da_apresentacao" placeholder="Informe a noa da apresentação" />
-                                        </div>
-                                       
-                                        
-                                                                                
-                                        <div class="form-group col-md-8">
+                                        <div class="form-group col-md-6">
                                            <label for="orientador">Orientador</label> 
-                                        <select required data-size="2" class="form-control" name="orientadorID">
-                                            <option th:each="orientador : ${orientadores}" th:value="${orientador.id}" th:text="${orientador.nome}"></option>
-                                        </select>
+                                            <select required data-size="2" class="form-control" name="orientadorID">
+                                                <option th:each="orientador : ${orientadores}" th:value="${orientador.id}" th:text="${orientador.nome}"></option>
+                                            </select>
                                         </div>
-                                        
-                                        <div class="form-group col-md-4">
-                                            <label for="data_para_apresentacao">Data para Apresentação</label> 
-                                            <input required class="datepicker form-control" autocomplete="off" name="data_para_apresentacao" data-date-format="dd/mm/yyyy"  />
-                                        </div>
-                                        
-                                        
-                                        <div class="form-group col-md-8">
-                                           <label for="curso">Curso</label> 
-                                        <select required class="form-control" name="cursoID" >
-                                            <option  th:each="cur : ${listaDeCursos}" th:value="${cur.id}" th:text="${cur.nome}" ></option>
-                                        </select>
-                                        </div>
-                                        
-                                        
-                                        <div class="form-group col-md-4">
-                                            <label for="tema">Tema do Trabalho</label> 
-                                            <input required type="text" class="form-control" id="tema" name="tema" placeholder="Informe o tema" />
-                                        </div>
-                                        
-                                                                               
-                                        <div class="form-group col-md-8">
-                                        <label for="aluno">Aluno</label>
-                                        <select required class="form-control" th:field="*{aluno.id}">
-                                            <option th:each="al : ${listaDeAlunos}" th:value="${al.id}" th:text="${al.nome}"></option>
-                                        </select>
-                                        </div>
-                                        
-                                        <div class="form-group col-md-8">
+                                        <div class="form-group col-md-6">
                                             <label for="co_orientador">Co-orientador</label> 
                                             <input required type="text" class="form-control" id="co_orientador" name="co_orientador" placeholder="Informe o co-orientador" />
-                                        </div>
-                                        
-                                                                                                                       
-                                        <div class="form-group col-md-8">
+                                        </div>                                                                     
+                                        <div class="form-group col-md-12">
                                             <p>Breve Resumo</p>
                                              <textarea  required type="text" id="breve_resumo" name="breve_resumo" rows="5" cols="33" class="form-control" placeholder="Informe um breve resumo">
                                             </textarea>
                                              
                                         </div>
-                                        
-                                                                               
+                                        <hr>
+                                        <div class="form-group col-md-8">
+                                            <label for="pdf_tcc">PDF TCC</label> 
+                                            <input required type="text" class="form-control" id="pdf_tcc" name="pdf_tcc" placeholder="Informe o tcc" />
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="nota_da_apresentacao">Nota da Apresentacao</label> 
+                                            <input required type="number" class="form-control" id="nota_da_apresentacao" name="nota_da_apresentacao" placeholder="Informe a noa da apresentação" />
+                                        </div>  
                                     </div>
                                     <div class="form-row">
                                         <button type="submit" class="btn btn-success">Salvar</button>
@@ -140,17 +119,17 @@
                        <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false">
                         <thead>
                           <tr>
-                            <th>Area da Pesquisa</th>
-                            <th>Status de Conclusão</th>
+                            <th>Área</th>
+                            <th>Status</th>
                             <th>Pdf do TCC</th>
                             <th>Orientador</th>
                             <th>Aluno</th>
                             <th>Curso</th>
                             <th>Co-orientador</th>
-                            <th>Breve Resumo</th>
+                            <th>Resumo</th>
                             <th>Tema</th>
-                            <th>Data para Apresentação</th>
-                            <th>Nota da Apresentação</th>
+                            <th>Apresentação</th>
+                            <th>Nota</th>
                             <th>Ações</th>
                           </tr>
                         </thead>
@@ -164,7 +143,7 @@
                             <td><span  th:text="${trabalho.co_orientador}"></span></td>
                             <td><span  th:text="${trabalho.breve_resumo}"></span></td>
                             <td><span  th:text="${trabalho.tema}"></span></td>
-                            <td><span  th:text="${#dates.format(trabalho.data_para_apresentacao, 'dd/mm/yyyy')}"></span></td>
+                            <td><span  th:text="${#dates.format(trabalho.dataApresentacao, 'dd/MM/yyyy')}"></span></td>
                             <td><span  th:text="${trabalho.nota_da_apresentacao}"></span></td>
                                
                             <td>

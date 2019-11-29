@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Trabalhos</title>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+        <link href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+        <script src="bootstrap/js/bootstrap-table-pt-BR.js"></script>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <script src="datepicker/js/bootstrap-datepicker.js"></script>
+        <link rel="stylesheet" href="datepicker/css/datepicker.css">
+        <script src="bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.pt-BR.js"></script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="validacpfjs/jquery-3.4.1.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('.datepicker').datepicker({
+                    language: 'pt-BR',
+                    autoclose: 1
+                });
+
+                $('#buscarPessoaResponsavel').click(function () {
+                    let nomeParaBuscar = document.getElementById('nomeBusca').value;
+                    let varAjax = {};
+
+                    varAjax["nomeParaBusca"] = nomeParaBuscar;
+                    let dados = JSON.stringify(varAjax);
+                    jQuery.ajax({
+                        type: "POST",
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        url: "buscarPessoaPorAjax",
+                        data: dados,
+                        success: function (data)
+                        {
+                            while (document.getElementById('tabelaPessoa').rows.length > 1) {
+                                document.getElementById('tabelaPessoa').deleteRow(1);
+                            }
+
+                            $.each(data, function (key) {
+                                let newRow = $("<tr>");
+                                let cols = "";
+                                cols += '<td>' + data[key].nome + '</td>';
+                                cols += '<td>' + data[key].cpf + '</td>';
+                                cols += '<td>' + data[key].email + '</td>';
+                                cols += '<td class="actions">';
+                                cols += '<input type="button" class="btn btn-success" onclick="relaciona(\'' + data[key].nome + '\', ' + data[key].id + ');" value="relacionar">';
+                                cols += '</td>';
+                                newRow.append(cols);
+                                $("#tabelaPessoa").append(newRow);
+                            });
+                        },
+                        error: onErrorVisualizarResumo()
+                    });
+
+                    return false;
+                });
+
+                function onErrorVisualizarResumo() {
+                    console.log(arguments);
+                }
+
+                if (document.getElementById('pessoas').value != "") {
+                    let pess = document.getElementById('pessoas').value.replace("[", "");
+                    pess = pess.replace("]", "");
+                    pess = pess.split(',');
+                    let id, posicao, tamanho, res, nome;
+                    for (let i = 0; i < pess.length; i++) {
+                        posicao = pess[i].indexOf("-");
+                        tamanho = pess[i].length;
+                        res = tamanho - posicao;
+                        id = pess[i].substr(posicao + 1, res - 1);
+                        nome = pess[i].substr(0, posicao);
+                        relaciona(nome, id);
+                    }
+                }
+            });
+
+            function relaciona(nome, id) {
+                while (document.getElementById('tabelaPessoa').rows.length > 1) {
+                    document.getElementById('tabelaPessoa').deleteRow(1);
+                }
+
+                let divRelacionados = document.getElementById("divDosRelacionados");
+                let input = document.createElement("INPUT");
+                //let inputHidden = document.createElement("INPUT");
+                let divInput = document.createElement("DIV");
+                let divBotao = document.createElement("DIV");
+                let titulo = document.createElement('h5');
+                let botao = document.createElement("INPUT");
+
+                divInput.className = "form-group col-md-4";
+                divInput.id = "divInputID" + id;
+                divBotao.className = "form-group col-md-2";
+                divBotao.id = "divBotaoID" + id;
+
+                let textoTitulo = document.createTextNode("Relacionado");
+                titulo.appendChild(textoTitulo);
+                //divInput.appendChild(titulo);
+
+                input.type = "text";
+                input.classList.add("form-control");
+                input.name = "nomesParaBuscaEmAtividades";
+                input.readOnly = "true";
+                input.id = id;
+                input.value = nome + "-" + id;
+                divInput.appendChild(input);
+
+                /*inputHidden.type = "hidden";
+                 inputHidden.name = "pessoasResponsaveisMinistrantesAtividade.idPessoa";
+                 inputHidden.value = id;
+                 divInput.appendChild(inputHidden);*/
+
+                botao.value = "desvincular";
+                botao.setAttribute('type', 'button');
+                botao.setAttribute('onclick', 'desvincular(' + id + ');');
+                botao.setAttribute('class', 'btn btn-danger');
+                divBotao.appendChild(botao);
+
+                divRelacionados.appendChild(divInput);
+                divRelacionados.appendChild(divBotao);
+            }
+
+            function desvincular(id) {
+                let node = document.getElementById("divInputID" + id);
+                node.parentNode.removeChild(node);
+                node = document.getElementById("divBotaoID" + id);
+                node.parentNode.removeChild(node);
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div th:insert="~{nav :: menu}"></div>
+
+                    <form action="editarBanca" method="post">
+                        <input type="hidden" name="id" th:value="${banca.id}">
+                        <input type="hidden" id="pessoas" th:value="${pessoa.nomesParaBuscaEmAtividades}">
+                        
+                        <div class="form-row" style="margin-top: 2%">
+                            <div class="form-group col-md-8" >
+                                <label for="trabalho">Trabalho</label> 
+                                <select required data-size="2" class="form-control" name="trabalhoID">
+                                    <option  th:each="trabalho : ${listaDeTrabalhos}" th:value="${trabalho.id}" th:text="${trabalho.tema}" th:selected="${trabalho.id == banca.trabalho.id}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="dataDaBanca">Data da banca</label>
+                                <input required class="datepicker form-control" th:value="${#dates.format(banca.dataDaBanca, 'dd/MM/yyyy')}" autocomplete="off" name="dataDaBanca" data-date-format="dd/mm/yyyy">
+                            </div>
+                        </div>
+                        <div class="form-row" align="center">
+                            <div class="custom-control custom-radio col-md-6">
+                                <input type="text" class="form-control" id="nomeBusca" name="nomeBusca" placeholder="Nome da pessoa que deseja relacionar como banca">
+                            </div>
+                            <input type="button" class="btn btn-primary" id="buscarPessoaResponsavel" value="Buscar">
+                        </div>
+                        <table id="tabelaPessoa" data-page-size="10" data-toggle="table" data-search="false" data-pagination="false" data-show-columns="false" style="margin-top: 2%">
+                            <thead>
+                                <tr>
+                                    <th table-active>Nome</th>
+                                    <th>CPF</th>
+                                    <th>email</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tr th:each="pessoa: ${listaDePessoas}">
+                                <td><span th:text="${pessoa.nome}"></span></td>
+                                <td><span th:text="${pessoa.CPF}"></span></td>
+                                <td><span th:text="${pessoa.email}"></span></td>
+                                <td><span th:text="${pessoa.email}"></span></td>
+                            </tr>
+                        </table>
+                        <hr>
+                        <div id="divDosRelacionados" class="form-row">
+
+                        </div>
+                        <hr>
+                        <div class="form-row">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+                <div th:insert="~{footer :: rodape}"></div>
+            </div>
+    </body>
+</html>
