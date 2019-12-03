@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group col-md-6 divDeExibicao">
                     <label for="inputOrientador" >co-orientador</label> 
-                    <input class="form-control" th:value="${banca.trabalho.co_orientador}" readonly="readonly">
+                    <input class="form-control" th:value="${banca.trabalho.co_orientador?.nome}" readonly="readonly">
                 </div>
             </div>
             <div class="col-md-12">

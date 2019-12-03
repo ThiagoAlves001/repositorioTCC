@@ -37,10 +37,15 @@ public class TrabalhoModel implements Serializable{
         private String pdf_tcc;
         
         @ManyToOne(fetch = FetchType.EAGER)
-        @JoinColumn(name="id_pessoa", insertable=true, updatable=true)
+        @JoinColumn(name="id_orientador", insertable=true, updatable=true)
         @Fetch(org.hibernate.annotations.FetchMode.JOIN)
         @Cascade(CascadeType.SAVE_UPDATE)
         private PessoaModel orientador;//chave estrangeira de pessoa
+        
+        @ManyToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name="id_co_orientador", insertable=true, updatable=true)
+        @Fetch(org.hibernate.annotations.FetchMode.SELECT)
+        @Cascade(CascadeType.SAVE_UPDATE)
         private PessoaModel co_orientador;
         
         @ManyToOne(fetch = FetchType.EAGER)
@@ -58,9 +63,6 @@ public class TrabalhoModel implements Serializable{
         @JsonIgnore
 	@OneToMany(mappedBy="trabalho", fetch = FetchType.EAGER)
 	private List<BancaModel> bancasQueFoiRelacionado;
-        
-        
-        
         
         private String breve_resumo;
         private String tema;

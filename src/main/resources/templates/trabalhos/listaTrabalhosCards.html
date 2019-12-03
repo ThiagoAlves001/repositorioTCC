@@ -6,25 +6,27 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        
+
         <style>
-         .card-deck {
-             justify-content: center;
-             align-items: center
-         }
-     </style>
+            .card-deck {
+                justify-content: center;
+                align-items: center
+            }
+        </style>
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div th:insert="~{nav :: menu}"></div>
-                     <div class="form-row" style="margin-top: 2%">
+
+                    <div class="jumbotron">
+                        <h3>Bancas Agendadas</h3>
+                        <hr class="my-4">
                         <div class="card-deck">
                             <div th:each="banca: ${bancas}">                            
-                                <div class="card" style="width: 18rem; margin-top: 4%">
+                                <div class="card" style="width: 20rem; margin-top: 4%">
                                     <div class="card-body">
-                                        <h6 class="card-title">Banca Cadastrada</h6>
                                         <h5 class="card-title"><span th:text="'Tema: '+${banca.trabalho.tema}"></span></h5>
                                         <h6 class="card-subtitle mb-2 text-muted"><span th:text="'Aluno: '+${banca.trabalho.aluno.nome}"></span></h6>
                                         <p class="card-text"><span th:text="'Orientador: '+${banca.trabalho.orientador.nome}"></span></p>
@@ -35,22 +37,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-row" style="margin-top: 2%">
+
+                    <div class="jumbotron ">
+                        <h3>Trabalhos em andamento</h3>
+                        <hr class="my-4">
                         <div class="card-deck">
                             <div th:each="trabalho: ${trabalhos}">                            
-                                <div class="card" style="width: 18rem; margin-top: 4%">
+                                <div class="card" style="width: 16rem; margin-top: 4%">
                                     <div class="card-body">
-                                        <h6 class="card-title">Trabalho Cadastrado</h6>
                                         <h5 class="card-title"><span th:text="'Tema: '+${trabalho.tema}"></span></h5>
                                         <h6 class="card-subtitle mb-2 text-muted"><span th:text="'Aluno: '+${trabalho.aluno.nome}"></span></h6>
                                         <p class="card-text"><span th:text="'Orientador: '+${trabalho.orientador.nome}"></span></p>
                                         <p class="card-text"><span th:text="'Possível Apresentação em: '+${#dates.format(trabalho.dataApresentacao, 'dd/MM/yyyy')}"></span></p>
-                                      <a href="#" class="card-link">Detalhes</a>
+                                        <a th:href="@{'detalhesTrabalho'(idTrabalho=${trabalho.id}, idBanca=0)}" class="card-link">Detalhes</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div th:insert="~{footer :: rodape}"></div>

@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -38,6 +39,14 @@ public class PessoaModel implements Serializable{
     @JsonIgnore
     @ManyToMany(mappedBy = "pessoasQueParticiparamDaBanca")
     private List<BancaModel> bancasQueParticipou;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "orientador")
+    private List<TrabalhoModel> orientacoes;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "co_orientador")
+    private List<TrabalhoModel> co_orientacoes;
     // private int id_pessoa;
 
     @Transient
@@ -49,6 +58,22 @@ public class PessoaModel implements Serializable{
 
     public void setNomesParaBuscaEmAtividades(List<String> nomesParaBuscaEmAtividades) {
         this.nomesParaBuscaEmAtividades = nomesParaBuscaEmAtividades;
+    }
+
+    public List<TrabalhoModel> getOrientacoes() {
+        return orientacoes;
+    }
+
+    public void setOrientacoes(List<TrabalhoModel> orientacoes) {
+        this.orientacoes = orientacoes;
+    }
+
+    public List<TrabalhoModel> getCo_orientacoes() {
+        return co_orientacoes;
+    }
+
+    public void setCo_orientacoes(List<TrabalhoModel> co_orientacoes) {
+        this.co_orientacoes = co_orientacoes;
     }
     
     

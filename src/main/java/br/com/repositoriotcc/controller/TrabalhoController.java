@@ -15,6 +15,7 @@ import br.com.repositoriotcc.service.BancaService;
 import br.com.repositoriotcc.service.CursoService;
 import br.com.repositoriotcc.service.PessoaService;
 import br.com.repositoriotcc.service.TrabalhoService;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class TrabalhoController {
+public class TrabalhoController implements Serializable{
 
     @Autowired
     private TrabalhoService service;    
@@ -38,7 +39,7 @@ public class TrabalhoController {
     @Autowired
     private AlunoService alunoService;        
     
-   @RequestMapping("listaTrabalhos")
+    @RequestMapping("listaTrabalhos")
     public String listaTrabalho(Model model) {
 
         Iterable<TrabalhoModel> listaDeTrabalhos = service.obterTodos();
@@ -53,13 +54,20 @@ public class TrabalhoController {
 
     @RequestMapping(value = "salvarTrabalho", method = RequestMethod.POST)
     public String salvarTrabalho(Model model, TrabalhoModel trabalho, @RequestParam("orientadorID") Long orientadorID, 
-            @RequestParam("cursoID") Long cursoID, AlunoModel aluno) {
+            @RequestParam("cursoID") Long cursoID, AlunoModel aluno, @RequestParam("co_orientadorID") Long co_orientadorID) {
         
         PessoaModel pessoa = pessoasService.obterPorId(orientadorID);
+        
+        if (co_orientadorID != 0) {
+            PessoaModel co_pessoa = pessoasService.obterPorId(co_orientadorID);        
+            trabalho.setCo_orientador(co_pessoa);
+        }
+        
         CursoModel curso = cursoService.obterPorId(cursoID);
         aluno = alunoService.obterPorId(aluno.getId());
         trabalho.setId(null);
         trabalho.setOrientador(pessoa);
+        
         trabalho.setCurso(curso);
         trabalho.setAluno(aluno);
         service.salvar(trabalho);
@@ -111,12 +119,44 @@ public class TrabalhoController {
         return "trabalhos/listaTrabalhosCards";
     }
     
-    
     @RequestMapping(value = "detalhesTrabalho", method = RequestMethod.GET)
     public String detalhesBanca(Model model, @RequestParam("idTrabalho") Long idTrabalho, @RequestParam("idBanca") Long idBanca) {
         TrabalhoModel trabalho = service.obterPorId(idTrabalho);
         model.addAttribute("trabalho", trabalho);
         model.addAttribute("idBanca", idBanca);
         return "trabalhos/detalhesTrabalho";
+    }
+    
+    @RequestMapping(value = {"editarTrabalho"}, method = RequestMethod.GET)
+    public String editarTrabalhoGet(Model model, @RequestParam("idTrabalho") Long idTrabalho) {
+
+        TrabalhoModel trabalho = service.obterPorId(idTrabalho);
+        model.addAttribute("trabalho", trabalho);
+        Iterable<TrabalhoModel> listaDeTrabalhos = service.obterTodos();
+        model.addAttribute("trabalhos", listaDeTrabalhos);
+        model.addAttribute("orientadores", pessoasService.obterTodos());
+        model.addAttribute("listaDeCursos", cursoService.obterTodos());
+        model.addAttribute("listaDeAlunos", alunoService.obterTodos());
+        model.addAttribute("aluno", new AlunoModel());
+        
+        return "trabalhos/editarTrabalho";
+    }
+
+    @RequestMapping(value = "editarTrabalho", method = RequestMethod.POST)
+    public String editarTrabalhoPost(Model model, TrabalhoModel trabalho, @RequestParam("orientadorID") Long orientadorID, 
+            @RequestParam("cursoID") Long cursoID, @RequestParam("co_orientadorID") Long co_orientadorID,
+            @RequestParam("alunoID") Long alunoID) {
+        
+        PessoaModel pessoa = pessoasService.obterPorId(orientadorID);
+        PessoaModel co_pessoa = pessoasService.obterPorId(co_orientadorID);
+        CursoModel curso = cursoService.obterPorId(cursoID);
+        AlunoModel aluno = alunoService.obterPorId(alunoID);
+        trabalho.setOrientador(pessoa);
+        trabalho.setCo_orientador(co_pessoa);
+        trabalho.setCurso(curso);
+        trabalho.setAluno(aluno);
+        service.salvar(trabalho);
+        
+       return "redirect:/listaTrabalhos";
     }
 }

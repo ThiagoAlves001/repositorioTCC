@@ -32,6 +32,9 @@
                     autoclose: 1
                 });
 
+                if (document.getElementById('bancaIdParaDiv').value == 0) {
+                    document.getElementById('divBotaoBanca').style.display = 'none';
+                }
             });
         </script>
     </head>
@@ -40,52 +43,62 @@
             <div th:insert="~{nav :: menu}"></div>
 
             <div class="form-row" style="margin-top: 2%">
-                 <div class="col-md-12"  style="margin-top: 2%">
-                       <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false">
-                        <thead>
-                          <tr>
-                            <th>Área</th>
-                            <th>Status</th>
-                            <th>Pdf do TCC</th>
-                            <th>Orientador</th>
-                            <th>Aluno</th>
-                            <th>Curso</th>
-                            <th>Co-orientador</th>
-                            <th>Resumo</th>
-                            <th>Tema</th>
-                            <th>Apresentação</th>
-                            <th>Nota</th>
-                            <th>Ações</th>
-                          </tr>
-                        </thead>
-                        <tr >
-                            <td><span  th:text="${trabalho.area_da_pesquisa}"></span></td>
-                            <td><span  th:text="${trabalho.status_de_conclusao}"></span></td>
-                            <td><span  th:text="${trabalho.pdf_tcc}"></span></td>
-                            <td><span  th:text="${trabalho.orientador.nome}"></span></td>
-                            <td><span  th:text="${trabalho.aluno.nome}"></span></td>
-                            <td><span  th:text="${trabalho.curso.nome}"></span></td>
-                            <td><span  th:text="${trabalho.co_orientador}"></span></td>
-                            <td><span  th:text="${trabalho.breve_resumo}"></span></td>
-                            <td><span  th:text="${trabalho.tema}"></span></td>
-                            <td><span  th:text="${#dates.format(trabalho.dataApresentacao, 'dd/MM/yyyy')}"></span></td>
-                            <td><span  th:text="${trabalho.nota_da_apresentacao}"></span></td>
-                               
-                            <td>
-                                <form action="deletarTrabalho" method="post">
-                                    <input type="hidden" name="id" th:value="${trabalho.id}" />
-                                    <button type="submit" onclick="return confirm('Deseja realmente excluir o registro?')" class="btn btn-danger">Remover</button>
-                                </form>
-                            </td> 
-                        </tr>
-                      </table>                        
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="tema">Tema do Trabalho</label> 
+                        <input required type="text" class="form-control" th:value="${trabalho.tema}" readonly="readonly"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="area_da_pesquisa">Área de Pesquisa</label> 
+                        <input required type="text" class="form-control" th:value="${trabalho.area_da_pesquisa}" readonly="readonly"/>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="dataApresentacao">Apresentação</label> 
+                        <input type="text" class="form-control" th:value="${#dates.format(trabalho.dataApresentacao, 'dd/MM/yyyy')}" readonly="readonly">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="aluno">Aluno</label>
+                        <input class="form-control" th:value="${trabalho.aluno.nome}" readonly="readonly">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="curso">Curso</label> 
+                        <input class="form-control" th:value="${trabalho.curso.nome}" readonly="readonly">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="status_de_conclusao">Status</label> 
+                        <input class="form-control" th:value="${trabalho.status_de_conclusao}" readonly="readonly">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="orientador">Orientador</label> 
+                        <input class="form-control" th:value="${trabalho.orientador.nome}" readonly="readonly">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="co_orientador">Co-Orientador</label> 
+                        <input class="form-control" th:value="${trabalho.co_orientador?.nome}" readonly="readonly">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <p>Breve Resumo</p>
+                      <textarea class="form-control" th:text="${trabalho.breve_resumo}" rows="5" readonly="readonly"></textarea>
+                    </div>
+                    <hr>
+                    <div class="form-group col-md-8">
+                        <label for="pdf_tcc">PDF TCC</label> 
+                        <input class="form-control" th:value="${trabalho.pdf_tcc}" readonly="readonly">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="nota_da_apresentacao">Nota da Apresentacao</label> 
+                        <input class="form-control" th:value="${trabalho.nota_da_apresentacao}" readonly="readonly">
+                    </div>  
                 </div>
-            <div class="form-row">
-                <div class="form-group col-md-1">
-                    <a class="btn btn-secondary" th:href="@{'detalhesBanca'(idBanca=${idBanca})}">Voltar</a>
-                </div>
-                <div class="form-group col-md-2">
-                    <a th:href="@{'listaTrabalhosCards'}" class="btn btn-secondary">Ir para tela inicial</a>
+                <div class="form-row">
+                    <div class="form-group col-md-4" id="divBotaoBanca">
+                        <input type="hidden" name="bancaIdParaDiv" id="bancaIdParaDiv" th:value="${idBanca}" />
+                        <a class="btn btn-secondary" th:href="@{'detalhesBanca'(idBanca=${idBanca})}">Voltar</a>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <a th:href="@{'listaTrabalhosCards'}" class="btn btn-secondary">Ir para tela inicial</a>
+                    </div>
                 </div>
             </div>
             <div th:insert="~{footer :: rodape}"></div>
