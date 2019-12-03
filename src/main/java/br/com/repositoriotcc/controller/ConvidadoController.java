@@ -17,11 +17,15 @@ public class ConvidadoController {
     @Autowired
     private ConvidadoService service;
 
-    @RequestMapping("/")
+    @RequestMapping(value={"/", "index", ""})
     public String index() {
-        return "index";
+        return "redirect:/listaTrabalhosCards";
     }
     
+    @RequestMapping("login")
+    public String login() {
+        return "/index";
+    }
 
     @RequestMapping("listaConvidados")
     public String listaConvidados(Model model) {

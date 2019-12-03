@@ -5,8 +5,10 @@
  */
 package br.com.repositoriotcc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cascade;
@@ -21,7 +25,8 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity(name = "trabalho")
+@Entity
+@Table(name = "trabalho")
 public class TrabalhoModel implements Serializable{
 	
 	@Id
@@ -36,6 +41,7 @@ public class TrabalhoModel implements Serializable{
         @Fetch(org.hibernate.annotations.FetchMode.JOIN)
         @Cascade(CascadeType.SAVE_UPDATE)
         private PessoaModel orientador;//chave estrangeira de pessoa
+        private PessoaModel co_orientador;
         
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name="id_curso", insertable=true, updatable=true)
@@ -49,13 +55,19 @@ public class TrabalhoModel implements Serializable{
         @Cascade(CascadeType.SAVE_UPDATE)
         private AlunoModel aluno;//chave estrangeira de aluno
         
-        private String co_orientador;//chave estrangeira de pessoa
+        @JsonIgnore
+	@OneToMany(mappedBy="trabalho", fetch = FetchType.EAGER)
+	private List<BancaModel> bancasQueFoiRelacionado;
+        
+        
+        
+        
         private String breve_resumo;
         private String tema;
         
-        @DateTimeFormat(pattern="dd/mm/yyyy")
+        @DateTimeFormat(pattern="dd/MM/yyyy")
         @Temporal(TemporalType.TIMESTAMP)
-        private Calendar data_para_apresentacao;
+        private Calendar dataApresentacao;
         
         private String nota_da_apresentacao;
 
@@ -115,11 +127,12 @@ public class TrabalhoModel implements Serializable{
         this.aluno = aluno;
     }
 
-    public String getCo_orientador() {
+   
+    public PessoaModel getCo_orientador() {
         return co_orientador;
     }
 
-    public void setCo_orientador(String co_orientador) {
+    public void setCo_orientador(PessoaModel co_orientador) {
         this.co_orientador = co_orientador;
     }
 
@@ -139,15 +152,14 @@ public class TrabalhoModel implements Serializable{
         this.tema = tema;
     }
 
-    
-    public Calendar getData_para_apresentacao() {
-        return data_para_apresentacao;
+    public Calendar getDataApresentacao() {
+        return dataApresentacao;
     }
 
-    public void setData_para_apresentacao(Calendar data_para_apresentacao) {
-        this.data_para_apresentacao = data_para_apresentacao;
+    public void setDataApresentacao(Calendar dataApresentacao) {
+        this.dataApresentacao = dataApresentacao;
     }
-    
+
     public String getNota_da_apresentacao() {
         return nota_da_apresentacao;
     }
@@ -156,8 +168,12 @@ public class TrabalhoModel implements Serializable{
         this.nota_da_apresentacao = nota_da_apresentacao;
     }
 
-    
-   
-        
+    public List<BancaModel> getBancasQueFoiRelacionado() {
+        return bancasQueFoiRelacionado;
+    }
+
+    public void setBancasQueFoiRelacionado(List<BancaModel> bancasQueFoiRelacionado) {
+        this.bancasQueFoiRelacionado = bancasQueFoiRelacionado;
+    } 
 	
 }

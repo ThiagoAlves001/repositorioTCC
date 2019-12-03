@@ -17,32 +17,35 @@ public class PessoaService {
     @Autowired
     private PessoaRepository repository;
 
-
-    public Iterable<PessoaModel> obterTodos(){
+    public Iterable<PessoaModel> obterTodos() {
         Iterable<PessoaModel> pessoas = repository.findAll();
         return pessoas;
     }
 
-    public Iterable<PessoaModel> obterTodosPorNome(String nome){
+    public Iterable<PessoaModel> obterTodosPorNome(String nome) {
         Iterable<PessoaModel> pessoas = repository.findByNome(nome);
         return pessoas;
     }
-    
-    public PessoaModel obterPorId(Long id){
+
+    public PessoaModel obterPorId(Long id) {
         Optional<PessoaModel> pessoaOptional = repository.findById(id);
         PessoaModel pessoa = new PessoaModel();
-        if(pessoaOptional.isPresent()){
+        if (pessoaOptional.isPresent()) {
             pessoa = pessoaOptional.get();
         }
-        
+
         return pessoa;
     }
-    
-    public void salvar(PessoaModel pessoa){
+
+    public void salvar(PessoaModel pessoa) {
         repository.save(pessoa);
     }
-    
-    public void deletarPorId(Long id){
+
+    public void deletarPorId(Long id) {
         repository.deleteById(id);
+    }
+
+    public Iterable<PessoaModel> buscarPorNome(String nome) {
+        return repository.findTop10ByNomeContaining(nome);
     }
 }

@@ -33,22 +33,18 @@
                 <div class="col-md-12">
                     <div th:insert="~{nav :: menu}"></div>
                     
-                    <div class="accordion" id="accordionExample" style="margin-top: 2%">
-			<div class="card">
-			    <div class="card-header" id="headingOne">
-			      <h5 class="mb-0">
-			        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Inserir Novo Orientador</button>
-			      </h5>
-			    </div>
+                    
 			
-			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-			      <div class="card-body">
-			      	<form action="salvarPessoa" method="post">
-                                    <div class="form-row">
+			    <form action="editarPessoa" method="post">
+                                <input type="hidden" name="id" th:value="${pessoa.id}">
+                                <input type="hidden" id="pessoas" th:value="${pessoa.nomesParaBuscaEmAtividades}">
+                        
+                        <div class="form-row" style="margin-top: 2%">
+                            
                                         
                                         <div class="form-group col-md-8">
                                             <label for="nome">Nome</label> 
-                                            <input required type="text" class="form-control" id="nome" name="nome" placeholder="Digite aqui o nome " />
+                                            <input required type="text" class="form-control" id="nome" name="nome" th:value="${pessoa.id}" th:text="${pessoa.nome} />
                                         </div>
                                         
                                         <div class="form-group col-md-4">
@@ -108,8 +104,7 @@
                                 </form>
 			      </div>
 			    </div>
-			</div>
-                    </div>
+			
                     
                     <hr/>
                     <div class="col-md-12"  style="margin-top: 2%">
@@ -117,44 +112,39 @@
                         <thead>
                           <tr>
                             <th>Nome</th>
-                            <th>Area de Conhecimento</th>
+                            
+                            <th>CPF</th>
+                            <th>Link Lattes</th>
+                            <th>Area</th>
                             <th>Email</th>
                             <th>orientados</th>
                             <th>vagas</th>
-                            <th>Ações</th>
-                            <th>#</th>
-                            <th>#</th>
-                            
+                            <th>Externo</th>
+                            <th>SIAPE</th>
+                            <th>Função</th>
+                            <th>Instituição</th>
+                            <th>Ações</th>                            
                           </tr>
                         </thead>
                         <tr th:each="pessoa: ${pessoas}">
                             <td><span th:text="${pessoa.nome}"></span></td>
+                            <td><span th:text="${pessoa.cpf}"></span></td>
+                            <td><span th:text="${pessoa.link_lattes}"></span></td>
                             <td><span th:text="${pessoa.area_conhecimento}"></span></td>
                             <td><span th:text="${pessoa.email}"></span></td>
                             <td><span th:text="${pessoa.total_alunos_orientados}"></span></td>
                             <td><span th:text="${pessoa.vagas_orientacao}"></span></td>
+                            <td><span th:text="${pessoa.pessoa_externo}"></span></td>
+                            <td><span th:text="${pessoa.siape}"></span></td>
+                            <td><span th:text="${pessoa.funcao}"></span></td>
+                            <td><span th:text="${pessoa.instituicao}"></span></td>
                             
                             <td>
-                            
                                 <form action="deletarPessoa" method="post">
                                     <input type="hidden" name="id" th:value="${pessoa.id}" />
                                     <button type="submit" onclick="return confirm('Deseja realmente excluir o registro?')" class="btn btn-danger">Remover</button>
                                 </form>
-                                
                             </td> 
-                            <td>
-                                    <form action="editarPessoa" method="get">
-                                        <input type="hidden" name="idPessoa" th:value="${pessoa.id}" />
-                                        <button type="submit" class="btn btn-warning">Editar</button>
-                                    </form>
-                            </td>
-                            <td>
-                                    <form action="detalhesPessoa" method="get">
-                                        <input type="hidden" name="idPessoa" th:value="${pessoa.id}" />
-                                        <button type="submit" class="btn btn-primary">Ver Mais</button>
-                                    </form>
-                            </td> 
-                                
                         </tr>
                       </table>                        
                 </div>

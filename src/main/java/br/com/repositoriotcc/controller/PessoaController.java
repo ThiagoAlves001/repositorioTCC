@@ -8,6 +8,8 @@ package br.com.repositoriotcc.controller;
 
 import br.com.repositoriotcc.model.PessoaModel;
 import br.com.repositoriotcc.service.PessoaService;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -83,6 +85,13 @@ public class PessoaController {
         
     }
     
+     
+    @RequestMapping(value = "detalhesPessoa", method = RequestMethod.GET)
+    public String detalhesPessoa(Model model, @RequestParam("idPessoa") Long idPessoa) {
+        PessoaModel pessoa = service.obterPorId(idPessoa);
+        model.addAttribute("pessoa", pessoa);
+        return "pessoas/detalhesPessoa";
+    }
     @RequestMapping("pesquisaOrientador")
     public String oesquisaOrientador(Model model) {
          

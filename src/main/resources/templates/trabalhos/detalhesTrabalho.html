@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Trabalhos</title>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+        <link href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+        <script src="bootstrap/js/bootstrap-table-pt-BR.js"></script>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <script src="datepicker/js/bootstrap-datepicker.js"></script>
+        <link rel="stylesheet" href="datepicker/css/datepicker.css">
+        <script src="bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.pt-BR.js"></script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="validacpfjs/jquery-3.4.1.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('.datepicker').datepicker({
+                    language: 'pt-BR',
+                    autoclose: 1
+                });
+
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div th:insert="~{nav :: menu}"></div>
+
+            <div class="form-row" style="margin-top: 2%">
+                 <div class="col-md-12"  style="margin-top: 2%">
+                       <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false">
+                        <thead>
+                          <tr>
+                            <th>Área</th>
+                            <th>Status</th>
+                            <th>Pdf do TCC</th>
+                            <th>Orientador</th>
+                            <th>Aluno</th>
+                            <th>Curso</th>
+                            <th>Co-orientador</th>
+                            <th>Resumo</th>
+                            <th>Tema</th>
+                            <th>Apresentação</th>
+                            <th>Nota</th>
+                            <th>Ações</th>
+                          </tr>
+                        </thead>
+                        <tr >
+                            <td><span  th:text="${trabalho.area_da_pesquisa}"></span></td>
+                            <td><span  th:text="${trabalho.status_de_conclusao}"></span></td>
+                            <td><span  th:text="${trabalho.pdf_tcc}"></span></td>
+                            <td><span  th:text="${trabalho.orientador.nome}"></span></td>
+                            <td><span  th:text="${trabalho.aluno.nome}"></span></td>
+                            <td><span  th:text="${trabalho.curso.nome}"></span></td>
+                            <td><span  th:text="${trabalho.co_orientador}"></span></td>
+                            <td><span  th:text="${trabalho.breve_resumo}"></span></td>
+                            <td><span  th:text="${trabalho.tema}"></span></td>
+                            <td><span  th:text="${#dates.format(trabalho.dataApresentacao, 'dd/MM/yyyy')}"></span></td>
+                            <td><span  th:text="${trabalho.nota_da_apresentacao}"></span></td>
+                               
+                            <td>
+                                <form action="deletarTrabalho" method="post">
+                                    <input type="hidden" name="id" th:value="${trabalho.id}" />
+                                    <button type="submit" onclick="return confirm('Deseja realmente excluir o registro?')" class="btn btn-danger">Remover</button>
+                                </form>
+                            </td> 
+                        </tr>
+                      </table>                        
+                </div>
+            <div class="form-row">
+                <div class="form-group col-md-1">
+                    <a class="btn btn-secondary" th:href="@{'detalhesBanca'(idBanca=${idBanca})}">Voltar</a>
+                </div>
+                <div class="form-group col-md-2">
+                    <a th:href="@{'listaTrabalhosCards'}" class="btn btn-secondary">Ir para tela inicial</a>
+                </div>
+            </div>
+            <div th:insert="~{footer :: rodape}"></div>
+    </body>
+</html>

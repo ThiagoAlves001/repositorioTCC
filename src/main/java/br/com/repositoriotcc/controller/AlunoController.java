@@ -58,6 +58,13 @@ public class AlunoController {
         return "alunos/listaAlunos";
     }
 
+     @RequestMapping(value = "detalhesAluno", method = RequestMethod.GET)
+    public String detalhesAluno(Model model, @RequestParam("idAluno") Long idAluno) {
+        AlunoModel aluno = service.obterPorId(idAluno);
+        model.addAttribute("aluno", aluno);
+        return "alunos/detalhesAluno";
+    }
+    
     @RequestMapping("buscarAluno")
     public String buscarAluno(Model model, @RequestParam("nome") String nome) {
         Iterable<AlunoModel> listaDeAlunos;
