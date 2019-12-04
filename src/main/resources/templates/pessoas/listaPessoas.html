@@ -113,9 +113,9 @@
                     
                     <hr/>
                     <div class="col-md-12"  style="margin-top: 2%">
-                       <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false">
-                        <thead>
-                          <tr>
+                       <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false" >
+                        <thead class="thead-dark">
+                          <tr >
                             <th>Nome</th>
                             <th>Area de Conhecimento</th>
                             <th>Email</th>
@@ -140,6 +140,8 @@
                                     <input type="hidden" name="id" th:value="${pessoa.id}" />
                                     <button type="submit" onclick="return confirm('Deseja realmente excluir o registro?')" class="btn btn-danger">Remover</button>
                                 </form>
+                                
+                                
                                 
                             </td> 
                             <td>

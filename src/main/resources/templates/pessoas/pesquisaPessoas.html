@@ -20,35 +20,35 @@
                     <div th:insert="~{nav :: menu}"></div>
                     
                     
-                    <div class="col-md-12"  style="margin-top: 2%">
-                       <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false">
-                        <thead>
-                          <tr>
+                   <div class="col-md-12"  style="margin-top: 2%">
+                       <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false" >
+                        <thead class="thead-dark">
+                          <tr >
                             <th>Nome</th>
-                            <th>total de alunos orientados</th>
-                            <th>CPF</th>
-                            <th>Link Lattes</th>
-                            <th>Area de conhecimento</th>
+                            <th>Area de Conhecimento</th>
                             <th>Email</th>
-                            <th>vagas pra orientação</th>
-                            <th>pessoa Externo</th>
-                            <th>SIAPE</th>
-                            <th>Função</th>
+                            <th>orientados</th>
+                            <th>vagas</th>
+                            <th>Ações</th>
+                            
+                            
                           </tr>
                         </thead>
                         <tr th:each="pessoa: ${pessoas}">
                             <td><span th:text="${pessoa.nome}"></span></td>
-                            <td><span th:text="${pessoa.total_alunos_orientados}"></span></td>
-                            <td><span th:text="${pessoa.cpf}"></span></td>
-                            <td><span th:text="${pessoa.link_lattes}"></span></td>
                             <td><span th:text="${pessoa.area_conhecimento}"></span></td>
                             <td><span th:text="${pessoa.email}"></span></td>
+                            <td><span th:text="${pessoa.total_alunos_orientados}"></span></td>
                             <td><span th:text="${pessoa.vagas_orientacao}"></span></td>
-                            <td><span th:text="${pessoa.pessoa_externo}"></span></td>
-                            <td><span th:text="${pessoa.siape}"></span></td>
-                            <td><span th:text="${pessoa.funcao}"></span></td>
                             
                             
+                            <td>
+                                    <form action="detalhesPessoa" method="get">
+                                        <input type="hidden" name="idPessoa" th:value="${pessoa.id}" />
+                                        <button type="submit" class="btn btn-primary">Ver Mais</button>
+                                    </form>
+                            </td> 
+                                
                         </tr>
                       </table>                        
                 </div>

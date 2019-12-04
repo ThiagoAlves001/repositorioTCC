@@ -76,4 +76,24 @@ public class AlunoController {
         model.addAttribute("alunos", listaDeAlunos);
         return "alunos/listaAlunos";
     }
+     @RequestMapping(value = {"editarAluno"}, method = RequestMethod.GET)
+    public String editarAlunoGet(Model model, @RequestParam("idAluno") Long idAluno) {
+        Iterable<AlunoModel> listaDeAlunos = service.obterTodos();
+        model.addAttribute("alunos", listaDeAlunos);
+        
+        AlunoModel aluno = service.obterPorId(idAluno);
+        model.addAttribute("aluno", aluno);
+        
+        
+        return "alunos/editarAluno";
+    }
+
+    @RequestMapping(value = "editarAluno", method = RequestMethod.POST)
+    public String editarAlunoPost(Model model, AlunoModel aluno) {
+        
+        
+        service.salvar(aluno);
+        
+       return "redirect:/listaAlunos";
+    }
 }

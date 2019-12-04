@@ -118,6 +118,22 @@ public class TrabalhoController implements Serializable{
         
         return "trabalhos/listaTrabalhosCards";
     }
+    @RequestMapping("listaTrabalhosConcluidos")
+    public String listaTrabalhosConcluidos(Model model) {
+
+        List<TrabalhoModel> listaDeTrabalhosSemBanca = new ArrayList<>();
+        Iterable<TrabalhoModel> listaDeTrabalhos = service.obterTodosComDataDeApresentacaoMaiorQueDataAtual();
+        for (TrabalhoModel trabalho : listaDeTrabalhos) {
+            if (trabalho.getBancasQueFoiRelacionado().isEmpty()) {
+                listaDeTrabalhosSemBanca.add(trabalho);
+            }
+        }
+        model.addAttribute("trabalhos", listaDeTrabalhosSemBanca);
+        Iterable<BancaModel> listaDeBancas = bancaService.obterTodos();
+        model.addAttribute("bancas", listaDeBancas);
+        
+        return "trabalhos/listaTrabalhosConcluidos";
+    }
     
     @RequestMapping(value = "detalhesTrabalho", method = RequestMethod.GET)
     public String detalhesBanca(Model model, @RequestParam("idTrabalho") Long idTrabalho, @RequestParam("idBanca") Long idBanca) {

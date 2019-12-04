@@ -60,4 +60,25 @@ public class CursoController {
         model.addAttribute("cursos", listaDeCursos);
         return "cursos/listaCursos";
     }
+    
+    @RequestMapping(value = {"editarCurso"}, method = RequestMethod.GET)
+    public String editarCursoGet(Model model, @RequestParam("idCurso") Long idCurso) {
+        Iterable<CursoModel> listaDeCursos = service.obterTodos();
+        model.addAttribute("cursos", listaDeCursos);
+        
+        CursoModel curso = service.obterPorId(idCurso);
+        model.addAttribute("curso", curso);
+        
+        
+        return "cursos/editarCurso";
+    }
+
+    @RequestMapping(value = "editarCurso", method = RequestMethod.POST)
+    public String editarCursoPost(Model model, CursoModel curso) {
+        
+        
+        service.salvar(curso);
+        
+       return "redirect:/listaCursos";
+    }
 }

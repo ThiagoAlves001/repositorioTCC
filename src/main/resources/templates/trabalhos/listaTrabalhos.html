@@ -89,8 +89,9 @@
                                             <div class="form-group col-md-6">
                                                 <label for="co_orientador">Co-Orientador</label> 
                                                 <select data-size="2" class="form-control" name="co_orientadorID">
-                                                    <option value="0"> Nenhum</option>
+                                                    
                                                     <option th:each="orientador : ${orientadores}" th:value="${orientador.id}" th:text="${orientador.nome}"></option>
+                                                     <option value="0"> Nenhum</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-12">
@@ -102,7 +103,7 @@
                                             <hr>
                                             <div class="form-group col-md-8">
                                                 <label for="pdf_tcc">PDF TCC</label> 
-                                                <input required type="text" class="form-control" id="pdf_tcc" name="pdf_tcc" placeholder="Informe o tcc" />
+                                                <input  type="text" class="form-control" id="pdf_tcc" name="pdf_tcc" placeholder="Informe o tcc" />
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="nota_da_apresentacao">Nota da Apresentacao</label> 
@@ -121,7 +122,7 @@
                     <hr/>
                     <div class="col-md-12"  style="margin-top: 2%">
                         <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false">
-                            <thead>
+                            <thead class="thead-dark">
                                 <tr>
                                     <th>Tema</th>
                                     <th>Área</th>

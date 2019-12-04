@@ -39,7 +39,15 @@ public class PessoaController {
 
         return "pessoas/listaPessoas";
     }
+    
+    @RequestMapping("pesquisaPessoas")
+    public String listaTodasPessoas(Model model) {
 
+        Iterable<PessoaModel> listaDePessoas = service.obterTodos();
+        model.addAttribute("pessoas", listaDePessoas);
+
+        return "pessoas/pesquisaPessoas";
+    }
     @RequestMapping(value = "salvarPessoa", method = RequestMethod.POST)
     public String salvarPessoa(Model model, PessoaModel pessoa) {// @RequestParam("nome") String nome,
         // @RequestParam("email") String email,
@@ -100,4 +108,25 @@ public class PessoaController {
 
         return "pessoas/pesquisaPessoas";
     }    
+    
+    @RequestMapping(value = {"editarPessoa"}, method = RequestMethod.GET)
+    public String editarPessoaGet(Model model, @RequestParam("idPessoa") Long idPessoa) {
+        Iterable<PessoaModel> listaDePessoas = service.obterTodos();
+        model.addAttribute("pessoas", listaDePessoas);
+        
+        PessoaModel pessoa = service.obterPorId(idPessoa);
+        model.addAttribute("pessoa", pessoa);
+        
+        
+        return "pessoas/editarPessoa";
+    }
+
+    @RequestMapping(value = "editarPessoa", method = RequestMethod.POST)
+    public String editarPessoaPost(Model model, PessoaModel pessoa) {
+        
+        
+        service.salvar(pessoa);
+        
+       return "redirect:/listaPessoas";
+    }
 }

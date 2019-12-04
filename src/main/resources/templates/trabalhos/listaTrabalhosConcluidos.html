@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Trabalhos</title>
+        <title>Trabalhos concluidos</title>
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -20,48 +20,33 @@
             <div class="row">
                 <div class="col-md-12">
                     <div th:insert="~{nav :: menu}"></div>
-                        <div align="center" style=" margin-top: 2%">
-                     
-                            <a class="btn btn-primary" href="pesquisaPessoas" role="button">Orientadores</a>
-                            <a class="btn btn-primary" href="listaTrabalhosConcluidos" role="button">Trabalhos Concluídos</a>
-                     
-                        </div>
+                   
                     
-                    <div class="jumbotron" style=" margin-top: 2%">
-                        <h3>Bancas Agendadas</h3>
-                        <hr class="my-4">
-                        <div class="card-deck">
-                            <div th:each="banca: ${bancas}">                            
-                                <div class="card" style="width: 20rem">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><span th:text="'Tema: '+${banca.trabalho.tema}"></span></h5>
-                                        <h6 class="card-subtitle mb-2 text-muted"><span th:text="'Aluno: '+${banca.trabalho.aluno.nome}"></span></h6>
-                                        <p class="card-text"><span th:text="'Orientador: '+${banca.trabalho.orientador.nome}"></span></p>
-                                        <p class="card-text"><span th:text="'Apresentação em: '+${#dates.format(banca.dataDaBanca, 'dd/MM/yyyy')}"></span></p>
-                                        <a class="card-link" th:href="@{'detalhesBanca'(idBanca=${banca.id})}">Detalhes</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     <div class="jumbotron ">
-                        <h3>Trabalhos em andamento</h3>
+                        <h3>Trabalhos concluidos</h3>
                         <hr class="my-4">
                         <div class="card-deck">
                             <div th:each="trabalho: ${trabalhos}">                            
                                 <div class="card" style="width: 16rem; margin-top: 4%">
                                     <div class="card-body">
+                                        
+                                        <span th="if(trabalho.status.equals('Concluido')){">
+                                        
                                         <h5 class="card-title"><span th:text="'Tema: '+${trabalho.tema}"></span></h5>
                                         <h6 class="card-subtitle mb-2 text-muted"><span th:text="'Aluno: '+${trabalho.aluno.nome}"></span></h6>
                                         <p class="card-text"><span th:text="'Orientador: '+${trabalho.orientador.nome}"></span></p>
-                                        <p class="card-text"><span th:text="'Possível Apresentação em: '+${#dates.format(trabalho.dataApresentacao, 'dd/MM/yyyy')}"></span></p>
+                                        <p class="card-text"><span th:text="' Apresentação Realizada em: '+${#dates.format(trabalho.dataApresentacao, 'dd/MM/yyyy')}"></span></p>
                                         <a th:href="@{'detalhesTrabalho'(idTrabalho=${trabalho.id}, idBanca=0)}" class="card-link">Detalhes</a>
+                                        <span th="}"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                                
                  
                 </div>
             </div>

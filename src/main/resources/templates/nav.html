@@ -5,36 +5,40 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <div th:fragment="menu">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="listaTrabalhosCards">SISGAT</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <nav class="navbar navbar-expand-lg navbar-black bg-light alert alert-secondary"   >
+  <b><a class="navbar-brand" href="listaTrabalhosCards" >SISGAT</a></b>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" >
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse alert alert-secondary" id="navbarSupportedContent"  >
     <ul class="navbar-nav mr-auto">
        <li class="nav-item active">
-        <a class="nav-link" href="listaBancas">Bancas Avaliadoras</a>
+           <b><a class="nav-link" href="listaBancas">Bancas Avaliadoras</a></b>
       </li>
        <li class="nav-item active">
-        <a class="nav-link" href="listaTrabalhos">Trabalhos</a>
+           <b><a class="nav-link" href="listaTrabalhos">Trabalhos</a></b>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="listaPessoas">Orientadores</a>
+        <b><a class="nav-link" href="listaPessoas">Orientadores</a></b>
       </li>
            
       <li class="nav-item active">
-        <a class="nav-link" href="listaAlunos">Alunos</a>
+       <b><a class="nav-link" href="listaAlunos">Alunos</a></b>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="listaCursos">Cursos</a>
+        <b><a class="nav-link" href="listaCursos">Cursos</a></b>
       </li>
      
       
     </ul>
-    
-      <li ><a href="/logout"><span class="glyphicon glyphicon-user"></span> Sair</a></li>
-      <li ><a href="login"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+      <button>
+      <li ><a href="/logout"><span class="glyphicon glyphicon-user" style="background:blue"></span> Sair</a></li>
+      </button>
+      
+          
+         
+      
     
   </div>
 </nav>

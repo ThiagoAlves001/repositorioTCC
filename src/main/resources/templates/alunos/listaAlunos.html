@@ -89,7 +89,7 @@
                     <hr/>
                     <div class="col-md-12"  style="margin-top: 2%">
                        <table data-page-size="5" data-toggle="table" data-search="true" data-pagination="true" data-show-columns="false">
-                        <thead>
+                        <thead class="thead-dark">
                           <tr>
                            <th>Nome</th>
                             <th>Data de Nascimento</th>
@@ -114,10 +114,10 @@
                                 </form>
                             </td>
                             <td>
-                                <form action="" method="post">
-                                    <input type="hidden" name="id" th:value="${aluno.id}" />
-                                    <button type="submit" onclick="return confirm('Deseja realmente alterar o registro?')" class="btn btn-warning">alterar</button>
-                                </form>
+                                    <form action="editarAluno" method="get">
+                                        <input type="hidden" name="idAluno" th:value="${aluno.id}" />
+                                        <button type="submit" class="btn btn-warning">Editar</button>
+                                    </form>
                             </td>
                             <td>
                                     <form action="detalhesAluno" method="get">
