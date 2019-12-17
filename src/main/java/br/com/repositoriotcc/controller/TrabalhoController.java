@@ -119,10 +119,10 @@ public class TrabalhoController implements Serializable{
         return "trabalhos/listaTrabalhosCards";
     }
     @RequestMapping("listaTrabalhosConcluidos")
-    public String listaTrabalhosConcluidos(Model model) {
+   public String listaTrabalhoConcluidos(Model model) {
 
         List<TrabalhoModel> listaDeTrabalhosSemBanca = new ArrayList<>();
-        Iterable<TrabalhoModel> listaDeTrabalhos = service.obterTodosComDataDeApresentacaoMaiorQueDataAtual();
+        Iterable<TrabalhoModel> listaDeTrabalhos = service.obterTodosComDataDeApresentacaoMenorQueDataAtual();
         for (TrabalhoModel trabalho : listaDeTrabalhos) {
             if (trabalho.getBancasQueFoiRelacionado().isEmpty()) {
                 listaDeTrabalhosSemBanca.add(trabalho);

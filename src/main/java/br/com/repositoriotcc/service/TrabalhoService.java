@@ -34,6 +34,13 @@ public class TrabalhoService {
         return trabalhos;
     }
 
+    public Iterable<TrabalhoModel> obterTodosComDataDeApresentacaoMenorQueDataAtual() {
+        Calendar dataAtual = new GregorianCalendar();
+        dataAtual.setTime(new Date());
+        Iterable<TrabalhoModel> trabalhos = repository.findAllByDataApresentacaoPrevious(dataAtual);
+        return trabalhos;
+    }
+    
     public Iterable<TrabalhoModel> obterTodosPorTema(String tema) {
         Iterable<TrabalhoModel> trabalhos = repository.findByTema(tema);
         return trabalhos;

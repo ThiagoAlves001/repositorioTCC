@@ -18,4 +18,7 @@ public interface TrabalhoRepository extends CrudRepository<TrabalhoModel, Long>{
         
         @Query("select a from TrabalhoModel a where a.dataApresentacao >= :dataApresentacao")
 	List<TrabalhoModel> findAllByDataApresentacaoAfter(@Param("dataApresentacao") Calendar dataApresentacao);
+        
+        @Query("select a from TrabalhoModel a where a.dataApresentacao <= :dataApresentacao")
+	List<TrabalhoModel> findAllByDataApresentacaoPrevious(@Param("dataApresentacao") Calendar dataApresentacao);
 }
